@@ -14,25 +14,27 @@
   <div id="vystup">Načítám...</div>
 
   <script>
-    fetch("https://script.google.com/macros/s/AKfycbzfcY_4eqmUDjN7qhREKUWu07Qb3kWD6oX2eGUlE9Jw38lieR7Au7jzXe8dZlG3Ra2H/exec")
-      .then(res => res.json())
-      .then(data => {
-        const vystup = document.getElementById("vystup");
-        vystup.innerHTML = "";
-        data.forEach(akce => {
-          vystup.innerHTML += `
-            <div class="akce">
-              <h2>${akce.nazev}</h2>
-              <p>${akce.popis}</p>
-              <p><strong>Datum:</strong> ${akce.datum}</p>
-              <img src="${akce.obrazek}" alt="${akce.nazev}" />
-            </div>`;
-        });
-      })
-      .catch(err => {
-        document.getElementById("vystup").innerText = "Chyba při načítání dat.";
-        console.error(err);
+  const url = "https://script.google.com/macros/s/TVŮJ_KÓD/exec";
+
+  fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url))
+    .then(res => res.json())
+    .then(data => {
+      const vystup = document.getElementById("vystup");
+      vystup.innerHTML = "";
+      data.forEach(akce => {
+        vystup.innerHTML += `
+          <div class="akce">
+            <h2>${akce.nazev}</h2>
+            <p>${akce.popis}</p>
+            <p><strong>Datum:</strong> ${akce.datum}</p>
+            <img src="${akce.obrazek}" alt="${akce.nazev}" />
+          </div>`;
       });
-  </script>
+    })
+    .catch(err => {
+      document.getElementById("vystup").innerText = "Chyba při načítání dat.";
+      console.error(err);
+    });
+</script>
 </body>
 </html>
