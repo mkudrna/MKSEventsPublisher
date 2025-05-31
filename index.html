@@ -2,11 +2,25 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>Akce</title>
+  <title>Nadcházející akce</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    .akce { border-bottom: 1px solid #ccc; margin-bottom: 1em; padding-bottom: 1em; }
-    img { max-width: 200px; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .akce {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    img {
+      max-width: 200px;
+      display: block;
+      margin-top: 8px;
+    }
   </style>
 </head>
 <body>
@@ -14,27 +28,34 @@
   <div id="vystup">Načítám...</div>
 
   <script>
-  const url = "https://script.google.com/macros/s/TVŮJ_KÓD/exec";
+    const url = "https://script.google.com/macros/s/AKfycbzfcY_4eqmUDjN7qhREKUWu07Qb3kWD6oX2eGUlE9Jw38lieR7Au7jzXe8dZlG3Ra2H/exec";
+    const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
 
-  fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url))
-    .then(res => res.json())
-    .then(data => {
-      const vystup = document.getElementById("vystup");
-      vystup.innerHTML = "";
-      data.forEach(akce => {
-        vystup.innerHTML += `
-          <div class="akce">
-            <h2>${akce.nazev}</h2>
-            <p>${akce.popis}</p>
-            <p><strong>Datum:</strong> ${akce.datum}</p>
-            <img src="${akce.obrazek}" alt="${akce.nazev}" />
-          </div>`;
+    fetch(proxyUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Síťová chyba");
+        }
+        return response.json();
+      })
+      .then(data => {
+        const vystup = document.getElementById("vystup");
+        vystup.innerHTML = "";
+        data.forEach(akce => {
+          vystup.innerHTML += `
+            <div class="akce">
+              <h2>${akce.nazev}</h2>
+              <p>${akce.popis}</p>
+              <p><strong>Datum:</strong> ${akce.datum}</p>
+              <img src="${akce.obrazek}" alt="${akce.nazev}">
+            </div>
+          `;
+        });
+      })
+      .catch(error => {
+        console.error("Chyba při načítání:", error);
+        document.getElementById("vystup").innerText = "Chyba při načítání dat.";
       });
-    })
-    .catch(err => {
-      document.getElementById("vystup").innerText = "Chyba při načítání dat.";
-      console.error(err);
-    });
-</script>
+  </script>
 </body>
 </html>
