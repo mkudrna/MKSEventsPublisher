@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Akce</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .akce { border-bottom: 1px solid #ccc; margin-bottom: 1em; padding-bottom: 1em; }
+    img { max-width: 200px; }
+  </style>
+</head>
+<body>
+  <h1>Nadcházející akce</h1>
+  <div id="vystup">Načítám...</div>
+
+  <script>
+    fetch("https://script.google.com/macros/s/TVŮJ_KÓD/exec")
+      .then(res => res.json())
+      .then(data => {
+        const vystup = document.getElementById("vystup");
+        vystup.innerHTML = "";
+        data.forEach(akce => {
+          vystup.innerHTML += `
+            <div class="akce">
+              <h2>${akce.nazev}</h2>
+              <p>${akce.popis}</p>
+              <p><strong>Datum:</strong> ${akce.datum}</p>
+              <img src="${akce.obrazek}" alt="${akce.nazev}" />
+            </div>`;
+        });
+      })
+      .catch(err => {
+        document.getElementById("vystup").innerText = "Chyba při načítání dat.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
