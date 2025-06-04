@@ -17,10 +17,12 @@
       </div><script>
     document.addEventListener("DOMContentLoaded", function () {
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0); // nastavit pouze datum
+
       document.querySelectorAll(".akce").forEach(el => {
         const datumStr = el.getAttribute("data-datum");
         const akceDate = new Date(datumStr);
+        akceDate.setHours(0, 0, 0, 0); // porovnávej jen datum
         if (akceDate < today) {
           el.style.display = "none";
         }
