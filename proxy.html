@@ -17,15 +17,22 @@
       </div><script>
     document.addEventListener("DOMContentLoaded", function () {
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // nastavit pouze datum
+      today.setHours(0, 0, 0, 0);
 
       document.querySelectorAll(".akce").forEach(el => {
         const datumStr = el.getAttribute("data-datum");
         const akceDate = new Date(datumStr);
-        akceDate.setHours(0, 0, 0, 0); // porovnávej jen datum
+        akceDate.setHours(0, 0, 0, 0);
         if (akceDate < today) {
           el.style.display = "none";
         }
       });
+
+      function sendHeight() {
+        const height = document.body.scrollHeight;
+        parent.postMessage({ type: 'resize-iframe', height }, '*');
+      }
+      window.addEventListener('load', sendHeight);
+      window.addEventListener('resize', sendHeight);
     });
   </script></body></html>
