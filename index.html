@@ -1,66 +1,68 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>Nadcházející akce</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      background: #f4f4f4;
-    }
-    .akce {
-      background: white;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    img {
-      max-width: 200px;
-      display: block;
-      margin-top: 8px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Učím se velká písmena a číslice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .tile {
+            background-color: #ffefd5;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .tile:hover {
+            background-color: #ffe4e1;
+            transform: scale(1.1);
+        }
+        #message {
+            font-size: 2em;
+            margin: 20px;
+            color: #ff6347;
+        }
+    </style>
 </head>
 <body>
-  <h1>Nadcházející akce</h1>
-  <div id="vystup">Načítám...</div>
+    <h1>Učím se rozpoznávat velká písmena a číslice</h1>
+    <div id="message">Klikni na políčko!</div>
+    <div class="grid" id="grid"></div>
 
-  <script>
-    // Proxy fetch přímo v rámci GitHub Pages
-    const sourceUrl = "https://script.google.com/macros/s/AKfycbzfcY_4eqmUDjN7qhREKUWu07Qb3kWD6oX2eGUlE9Jw38lieR7Au7jzXe8dZlG3Ra2H/exec";
+    <script>
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '0123456789';
+        const grid = document.getElementById('grid');
+        const message = document.getElementById('message');
 
-    fetch(sourceUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Síťová chyba: " + response.status);
-        }
-        return response.json();
-      })
-      .then(data => {
-        const vystup = document.getElementById("vystup");
-        vystup.innerHTML = "";
-
-        if (!Array.isArray(data)) {
-          throw new Error("Odpověď není pole");
+        function createTile(char) {
+            const div = document.createElement('div');
+            div.className = 'tile';
+            div.textContent = char;
+            div.onclick = () => {
+                message.textContent = `To je ${isNaN(char) ? 'písmeno' : 'číslice'} ${char}!`;
+            };
+            grid.appendChild(div);
         }
 
-        data.forEach(akce => {
-          vystup.innerHTML += `
-            <div class="akce">
-              <h2>${akce.nazev}</h2>
-              <p>${akce.popis}</p>
-              <p><strong>Datum:</strong> ${akce.datum}</p>
-              <img src="${akce.obrazek}" alt="${akce.nazev}">
-            </div>
-          `;
-        });
-      })
-      .catch(error => {
-        console.error("Chyba při načítání:", error);
-        document.getElementById("vystup").innerText = "Chyba při načítání dat.";
-      });
-  </script>
+        for (const l of letters) {
+            createTile(l);
+        }
+        for (const n of numbers) {
+            createTile(n);
+        }
+    </script>
 </body>
 </html>
