@@ -8,7 +8,7 @@
 body{margin:0;padding:16px;background:#fff1ea;color:#222;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
 .wrapper{max-width:880px;margin:0 auto}
 h1{margin:8px 0 14px;font-size:clamp(22px,3.2vw,28px)}
-.grid{display:grid;gap:14px;grid-template-columns:1fr} /* vždy jeden sloupec */
+.grid{display:grid;gap:14px;grid-template-columns:1fr}
 .card{display:flex;flex-direction:column;gap:12px;background:#fff;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:14px}
 .hero{position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:16/9;max-height:480px}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
@@ -92,7 +92,7 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
   <div class="wrapper">
     <h1>Nadcházející akce</h1>
     <div class="grid"><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://drive.google.com/uc?export=view&amp;id=1X7pR5JlO0cTDP-jyHfMnDTOn0i6R29Y1" alt=""></div>
+    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-10-13-zs-nataceni.png" alt=""></div>
     <div class="body">
       <h2>ZŠ - natáčení</h2>
       <div class="meta">
@@ -103,7 +103,7 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
       
     </div>
   </article><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://drive.google.com/uc?export=view&amp;id=1FPYuT2Q_0eASFvVRPVtyEx5y-WIba9Ea" alt=""></div>
+    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-10-20-zs-nataceni.png" alt=""></div>
     <div class="body">
       <h2>ZŠ - natáčení</h2>
       <div class="meta">
@@ -114,7 +114,7 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
       
     </div>
   </article><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://drive.google.com/uc?export=view&amp;id=1JiXu4RMvJLhHDCKYZrjejOjUMkeqztxT" alt=""></div>
+    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-11-17-zastupitelstvo.jpg" alt=""></div>
     <div class="body">
       <h2>Zastupitelstvo</h2>
       <div class="meta">
@@ -125,7 +125,7 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
       
     </div>
   </article><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://drive.google.com/uc?export=view&amp;id=1LH1Ntf1pGi0iuY2C_n7wC0UPP_wjFpBb" alt=""></div>
+    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-12-11-od-hospody-k-hospode-v.png" alt=""></div>
     <div class="body">
       <h2>Od hospody k hospodě V</h2>
       <div class="meta">
@@ -160,7 +160,6 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
   </article></div>
   </div>
 <script>
-// Klasifikace poměru stran
 function classifyHero(img){
   try{
     var w=img.naturalWidth||0,h=img.naturalHeight||0,wrap=img.closest('.hero');
@@ -177,13 +176,8 @@ function classifyHero(img){
 document.querySelectorAll('.hero img').forEach(function(img){
   if (img.complete){ classifyHero(img); }
   img.addEventListener('load', function(){ classifyHero(img); });
-  // Pokud se obrázek nenačte → hero schovat (ať není černý box)
-  img.addEventListener('error', function(){
-    var hero=img.closest('.hero'); if(hero) hero.style.display='none';
-    window.dispatchEvent(new Event('resize'));
-  });
+  img.addEventListener('error', function(){ var hero=img.closest('.hero'); if(hero) hero.style.display='none'; window.dispatchEvent(new Event('resize')); });
 });
-// iFrame autosize
 function sendHeight(){var h=document.body.scrollHeight; parent&&parent.postMessage&&parent.postMessage({type:'resize-iframe',height:h},'*');}
 window.addEventListener('load',sendHeight);window.addEventListener('resize',sendHeight);setTimeout(sendHeight,300);
 </script>
