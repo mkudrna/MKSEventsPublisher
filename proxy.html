@@ -5,12 +5,12 @@
 <style>
 :root{--bg:#0b0b10;--card:#12121a;--ink:#e9e9f1;--muted:#acafbd;--accent:#79b8ff}
 *{box-sizing:border-box}
-body{margin:0;padding:16px;background:#fff6f2;color:#222;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-.wrapper{max-width:960px;margin:0 auto}
+body{margin:0;padding:16px;background:#fff1ea;color:#222;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+.wrapper{max-width:880px;margin:0 auto}
 h1{margin:8px 0 14px;font-size:clamp(22px,3.2vw,28px)}
 .grid{display:grid;gap:14px;grid-template-columns:1fr} /* vždy jeden sloupec */
 .card{display:flex;flex-direction:column;gap:12px;background:#fff;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:14px}
-.hero{position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:16/9;max-height:520px}
+.hero{position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:16/9;max-height:480px}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
 .hero.square{aspect-ratio:1/1}
 .hero.landscape{aspect-ratio:4/3}
@@ -160,7 +160,7 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
   </article></div>
   </div>
 <script>
-// Klasifikace poměru stran + fallback (už NESKRÝVÁ hero, jen drží prázdno)
+// Klasifikace poměru stran
 function classifyHero(img){
   try{
     var w=img.naturalWidth||0,h=img.naturalHeight||0,wrap=img.closest('.hero');
@@ -168,17 +168,22 @@ function classifyHero(img){
     wrap.classList.remove('square','landscape','portrait');
     if (w && h){
       var r=w/h;
-      if (r>1.25 && r<1.45){ wrap.classList.add('landscape'); } // ~4:3
-      else if (r>=0.9 && r<=1.1){ wrap.classList.add('square'); } // ~1:1
-      else if (r<0.9){ wrap.classList.add('portrait'); }          // ~3:4
-      // jinak necháme 16:9
+      if (r>1.25 && r<1.45){ wrap.classList.add('landscape'); }
+      else if (r>=0.9 && r<=1.1){ wrap.classList.add('square'); }
+      else if (r<0.9){ wrap.classList.add('portrait'); }
     }
   }catch(e){}
 }
 document.querySelectorAll('.hero img').forEach(function(img){
   if (img.complete){ classifyHero(img); }
   img.addEventListener('load', function(){ classifyHero(img); });
+  // Pokud se obrázek nenačte → hero schovat (ať není černý box)
+  img.addEventListener('error', function(){
+    var hero=img.closest('.hero'); if(hero) hero.style.display='none';
+    window.dispatchEvent(new Event('resize'));
+  });
 });
+// iFrame autosize
 function sendHeight(){var h=document.body.scrollHeight; parent&&parent.postMessage&&parent.postMessage({type:'resize-iframe',height:h},'*');}
 window.addEventListener('load',sendHeight);window.addEventListener('resize',sendHeight);setTimeout(sendHeight,300);
 </script>
