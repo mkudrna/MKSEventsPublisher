@@ -2,10 +2,16 @@
 <html lang="cs"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nadcházející akce</title><meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0b10;--card:#12121a;--ink:#0e0f12;--muted:#606573}
 *{box-sizing:border-box}
-body{margin:0;padding:16px;background:#fff1ea;color:#222;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+body{
+  margin:0;padding:16px;background:linear-gradient(180deg,#fff6f2,#fff0ec);
+  color:#222;font:16px/1.6 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu
+}
 .wrapper{max-width:980px;margin:0 auto}
 h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
 .grid{display:grid;gap:16px;grid-template-columns:1fr}
@@ -15,32 +21,39 @@ h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
   display:flex; gap:16px; align-items:flex-start;
   background:#fff; border-radius:16px; padding:16px;
   box-shadow:0 6px 24px rgba(0,0,0,.08);
+  border-left:8px solid var(--bar,#f4a261); /* barevný proužek dle kalendáře */
+  transition: transform .15s ease, box-shadow .2s ease;
 }
+.card:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.12); }
 
 /* levý sloupec s plakátem */
-.media{
-  flex:0 0 320px; /* šířka sloupce na desktopu */
-  max-width:320px;
-  align-self:flex-start;
-}
+.media{ flex:0 0 320px; max-width:320px; align-self:flex-start; }
 .poster-wrap{
   background:#fff; border-radius:12px; overflow:hidden;
   border:1px solid rgba(0,0,0,.06);
   box-shadow:0 4px 12px rgba(0,0,0,.06);
 }
-.poster{
-  display:block; width:100%; height:auto; /* žádný ořez */
-  max-height:620px; /* strop, ať karta není nekonečná */
+.poster{ display:block; width:100%; height:auto; max-height:620px;
+  transition: transform .3s ease, filter .3s ease;
 }
+.card:hover .poster{ transform:scale(1.03); filter:brightness(1.05); }
 
 /* pravý sloupec s textem */
 .body{flex:1; min-width:0}
-.title{margin:0 0 6px; font-size:22px; line-height:1.25}
-.meta{
-  display:flex; flex-wrap:wrap; gap:8px 16px;
-  color:#555; font-size:14px; margin:6px 0 10px;
+.title{margin:0 0 8px; font-size:24px; line-height:1.25; font-weight:700; color:#222}
+.meta{ display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center; margin:0 0 10px; }
+.badge{
+  display:inline-block; background:#f5f6fa; color:#444;
+  border-radius:6px; padding:2px 10px; font-size:13px; font-weight:600;
 }
-.desc{color:#333}
+.meta .item{ color:#555; font-size:14px; }
+.desc{ color:#333 }
+
+/* mapování barev podle kalendáře (substring match) */
+.card[data-calendar*="KD"]{ --bar:#e76f51; }           /* Kulturní dům, Sál KD... */
+.card[data-calendar*="Hamr"]{ --bar:#2a9d8f; }         /* Buškův hamr */
+.card[data-calendar*="Taneční"]{ --bar:#e9c46a; }      /* Taneční sál */
+.card[data-calendar*="Sviny"]{ --bar:#264653; }        /* Trhové Sviny a okolí */
 
 /* responsivní rozpad do 1 sloupce */
 @media (max-width: 680px){
@@ -54,7 +67,8 @@ h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
   body{background:var(--bg); color:#e9e9f1}
   .card{background:var(--card); box-shadow:0 6px 30px rgba(0,0,0,.35)}
   .poster-wrap{border-color:rgba(255,255,255,.08); background:#0c0c12}
-  .meta{color:#acafbd}
+  .badge{background:#1b1c26; color:#e3e6f0}
+  .meta .item{color:#acafbd}
   .desc{color:#dfe3ee}
 }
 a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
@@ -123,7 +137,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
 <body>
   <div class="wrapper">
     <h1>Nadcházející akce</h1>
-    <div class="grid"><article class="card">
+    <div class="grid"><article class="card" data-calendar="Taneční sál">
     <div class="media">
          <div class="poster-wrap">
            <img class="poster" loading="lazy" decoding="async" src="/img/2025-10-13-zs-nataceni.png" alt="">
@@ -132,13 +146,14 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
     <div class="body">
       <h2 class="title">ZŠ - natáčení</h2>
       <div class="meta">
-        <div>📅 13.10.2025 · ⏰ 12:00–0:00</div>
+        <span class="badge">📅 13.10.2025</span>
+        <span class="badge">⏰ 12:00–0:00</span>
         
-        <div>🗂️ Taneční sál</div>
+        <span class="item">🗂️ Taneční sál</span>
       </div>
       
     </div>
-  </article><article class="card">
+  </article><article class="card" data-calendar="Kulturní dům">
     <div class="media">
          <div class="poster-wrap">
            <img class="poster" loading="lazy" decoding="async" src="/img/2025-10-20-zs-nataceni.png" alt="">
@@ -147,13 +162,14 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
     <div class="body">
       <h2 class="title">ZŠ - natáčení</h2>
       <div class="meta">
-        <div>📅 20.10.2025 · ⏰ 12:00–0:00</div>
+        <span class="badge">📅 20.10.2025</span>
+        <span class="badge">⏰ 12:00–0:00</span>
         
-        <div>🗂️ Kulturní dům</div>
+        <span class="item">🗂️ Kulturní dům</span>
       </div>
       
     </div>
-  </article><article class="card">
+  </article><article class="card" data-calendar="Taneční sál">
     <div class="media">
          <div class="poster-wrap">
            <img class="poster" loading="lazy" decoding="async" src="/img/2025-11-17-zastupitelstvo.jpg" alt="">
@@ -162,13 +178,14 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
     <div class="body">
       <h2 class="title">Zastupitelstvo</h2>
       <div class="meta">
-        <div>📅 17.11.2025 · ⏰ 17:00–19:00</div>
+        <span class="badge">📅 17.11.2025</span>
+        <span class="badge">⏰ 17:00–19:00</span>
         
-        <div>🗂️ Taneční sál</div>
+        <span class="item">🗂️ Taneční sál</span>
       </div>
       
     </div>
-  </article><article class="card">
+  </article><article class="card" data-calendar="Taneční sál">
     <div class="media">
          <div class="poster-wrap">
            <img class="poster" loading="lazy" decoding="async" src="/img/2025-12-11-od-hospody-k-hospode-v.png" alt="">
@@ -177,31 +194,34 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
     <div class="body">
       <h2 class="title">Od hospody k hospodě V</h2>
       <div class="meta">
-        <div>📅 11.12.2025 · ⏰ 18:00–20:00</div>
-        <div>📍 Sál KD</div>
-        <div>🗂️ Taneční sál</div>
+        <span class="badge">📅 11.12.2025</span>
+        <span class="badge">⏰ 18:00–20:00</span>
+        <span class="item">📍 Sál KD</span>
+        <span class="item">🗂️ Taneční sál</span>
       </div>
       
     </div>
-  </article><article class="card">
+  </article><article class="card" data-calendar="Taneční sál">
     
     <div class="body">
       <h2 class="title">ZŠ - předávání vysvědčení</h2>
       <div class="meta">
-        <div>📅 29.6.2026 · ⏰ 17:00–19:00</div>
+        <span class="badge">📅 29.6.2026</span>
+        <span class="badge">⏰ 17:00–19:00</span>
         
-        <div>🗂️ Taneční sál</div>
+        <span class="item">🗂️ Taneční sál</span>
       </div>
       
     </div>
-  </article><article class="card">
+  </article><article class="card" data-calendar="Trhové Sviny a okolí">
     
     <div class="body">
       <h2 class="title">Pódium Nežetice</h2>
       <div class="meta">
-        <div>📅 18.7.2026</div>
-        <div>📍 Nežetice</div>
-        <div>🗂️ Trhové Sviny a okolí</div>
+        <span class="badge">📅 18.7.2026</span>
+        <span class="badge">⏰ Celý den</span>
+        <span class="item">📍 Nežetice</span>
+        <span class="item">🗂️ Trhové Sviny a okolí</span>
       </div>
       
     </div>
