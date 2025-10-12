@@ -10,7 +10,7 @@
 *{box-sizing:border-box}
 body{
   margin:0;padding:16px;background:linear-gradient(180deg,#fff6f2,#fff0ec);
-  color:#222;font:16px/1.6 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu
+  color:#222;font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu
 }
 .wrapper{max-width:980px;margin:0 auto}
 h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
@@ -18,8 +18,8 @@ h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
 
 /* karta */
 .card{
-  display:flex; gap:16px; align-items:flex-start;
-  background:#fff; border-radius:16px; padding:16px;
+  display:flex; gap:18px; align-items:flex-start;
+  background:#fff; border-radius:16px; padding:18px;
   box-shadow:0 6px 24px rgba(0,0,0,.08);
   border-left:8px solid var(--bar,#f4a261); /* barevný proužek dle kalendáře */
   transition: transform .15s ease, box-shadow .2s ease;
@@ -27,27 +27,39 @@ h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
 .card:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.12); }
 
 /* levý sloupec s plakátem */
-.media{ flex:0 0 320px; max-width:320px; align-self:flex-start; }
+.media{ flex:0 0 340px; max-width:340px; align-self:flex-start; }
 .poster-wrap{
   background:#fff; border-radius:12px; overflow:hidden;
   border:1px solid rgba(0,0,0,.06);
   box-shadow:0 4px 12px rgba(0,0,0,.06);
+  cursor: zoom-in;
 }
-.poster{ display:block; width:100%; height:auto; max-height:620px;
+.poster{ display:block; width:100%; height:auto; max-height:640px;
   transition: transform .3s ease, filter .3s ease;
 }
 .card:hover .poster{ transform:scale(1.03); filter:brightness(1.05); }
 
-/* pravý sloupec s textem */
+/* pravý sloupec s textem – větší typografie */
 .body{flex:1; min-width:0}
-.title{margin:0 0 8px; font-size:24px; line-height:1.25; font-weight:700; color:#222}
-.meta{ display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center; margin:0 0 10px; }
+.title{margin:0 0 10px; font-size:26px; line-height:1.25; font-weight:700; color:#202225}
+.meta{ display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center; margin:0 0 12px; }
 .badge{
-  display:inline-block; background:#f5f6fa; color:#444;
-  border-radius:6px; padding:2px 10px; font-size:13px; font-weight:600;
+  display:inline-block; background:#f5f6fa; color:#3d4051;
+  border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600;
 }
-.meta .item{ color:#555; font-size:14px; }
-.desc{ color:#333 }
+.meta .item{ color:#555; font-size:15px; }
+.desc{ color:#2a2d3a; font-size:17px }
+
+/* akční tlačítka */
+.actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px }
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(0,0,0,.1); background:#fff;
+  padding:8px 12px; border-radius:10px; font-weight:600; font-size:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04); cursor:pointer; text-decoration:none; color:#1a1f36;
+}
+.btn:hover{ box-shadow:0 6px 18px rgba(0,0,0,.10) }
+.btn .ico{ font-size:16px }
 
 /* mapování barev podle kalendáře (substring match) */
 .card[data-calendar*="KD"]{ --bar:#e76f51; }           /* Kulturní dům, Sál KD... */
@@ -55,8 +67,13 @@ h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
 .card[data-calendar*="Taneční"]{ --bar:#e9c46a; }      /* Taneční sál */
 .card[data-calendar*="Sviny"]{ --bar:#264653; }        /* Trhové Sviny a okolí */
 
+/* LIGHTBOX */
+.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:9999; }
+.lightbox.open{ display:flex }
+.lightbox img{ max-width:94vw; max-height:94vh; box-shadow:0 10px 40px rgba(0,0,0,.5); border-radius:12px }
+
 /* responsivní rozpad do 1 sloupce */
-@media (max-width: 680px){
+@media (max-width: 740px){
   .card{flex-direction:column}
   .media{flex:unset; max-width:100%}
   .poster{max-height:70vh}
@@ -70,6 +87,7 @@ h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
   .badge{background:#1b1c26; color:#e3e6f0}
   .meta .item{color:#acafbd}
   .desc{color:#dfe3ee}
+  .btn{ background:#151823; color:#e8ecf6; border-color:#20253a }
 }
 a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
 </style>
@@ -152,6 +170,15 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
         <span class="item">🗂️ Taneční sál</span>
       </div>
       
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD&amp;dates=20251013T100000Z/20251012T220000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+        <span class="ico">🗓️</span> Přidat do Google kalendáře
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AFDS9kPo0bkb4xQGkhSlxMxg2%40mks-events%0D%0ADTSTAMP%3A20251012T214443Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD%0D%0ADTSTART%3A20251013T100000Z%0D%0ADTEND%3A20251012T220000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-13-zs-nataceni.ics">
+        <span class="ico">📥</span> Stáhnout iCal (.ics)
+      </a>
+    </div>
     </div>
   </article><article class="card" data-calendar="Kulturní dům">
     <div class="media">
@@ -168,6 +195,15 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
         <span class="item">🗂️ Kulturní dům</span>
       </div>
       
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD&amp;dates=20251020T100000Z/20251019T220000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+        <span class="ico">🗓️</span> Přidat do Google kalendáře
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Akc8Kpw3aKDYMJZ5YaK1%2FXQOe%40mks-events%0D%0ADTSTAMP%3A20251012T214444Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD%0D%0ADTSTART%3A20251020T100000Z%0D%0ADTEND%3A20251019T220000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-20-zs-nataceni.ics">
+        <span class="ico">📥</span> Stáhnout iCal (.ics)
+      </a>
+    </div>
     </div>
   </article><article class="card" data-calendar="Taneční sál">
     <div class="media">
@@ -184,6 +220,15 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
         <span class="item">🗂️ Taneční sál</span>
       </div>
       
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Zastupitelstvo&amp;dates=20251117T160000Z/20251117T180000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+        <span class="ico">🗓️</span> Přidat do Google kalendáře
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AoWAXio78qQ2BSoc5t3X1dePn%40mks-events%0D%0ADTSTAMP%3A20251012T214444Z%0D%0ASUMMARY%3AZastupitelstvo%0D%0ADTSTART%3A20251117T160000Z%0D%0ADTEND%3A20251117T180000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-11-17-zastupitelstvo.ics">
+        <span class="ico">📥</span> Stáhnout iCal (.ics)
+      </a>
+    </div>
     </div>
   </article><article class="card" data-calendar="Taneční sál">
     <div class="media">
@@ -200,6 +245,15 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
         <span class="item">🗂️ Taneční sál</span>
       </div>
       
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Od%20hospody%20k%20hospod%C4%9B%20V&amp;dates=20251211T170000Z/20251211T190000Z&amp;details=&amp;location=S%C3%A1l%20KD&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+        <span class="ico">🗓️</span> Přidat do Google kalendáře
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2FWXLxwf%2BNqKQOQesUgTIh%2Bp6%40mks-events%0D%0ADTSTAMP%3A20251012T214445Z%0D%0ASUMMARY%3AOd%20hospody%20k%20hospod%C4%9B%20V%0D%0ADTSTART%3A20251211T170000Z%0D%0ADTEND%3A20251211T190000Z%0D%0ALOCATION%3AS%C3%A1l%20KD%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-12-11-od-hospody-k-hospode-v.ics">
+        <span class="ico">📥</span> Stáhnout iCal (.ics)
+      </a>
+    </div>
     </div>
   </article><article class="card" data-calendar="Taneční sál">
     
@@ -212,6 +266,15 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
         <span class="item">🗂️ Taneční sál</span>
       </div>
       
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20p%C5%99ed%C3%A1v%C3%A1n%C3%AD%20vysv%C4%9Bd%C4%8Den%C3%AD&amp;dates=20260629T150000Z/20260629T170000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+        <span class="ico">🗓️</span> Přidat do Google kalendáře
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Ayy0A2g1RyZzRGtYJEJ1QamF%2F%40mks-events%0D%0ADTSTAMP%3A20251012T214441Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20p%C5%99ed%C3%A1v%C3%A1n%C3%AD%20vysv%C4%9Bd%C4%8Den%C3%AD%0D%0ADTSTART%3A20260629T150000Z%0D%0ADTEND%3A20260629T170000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2026-06-29-zs-predavani-vysvedceni.ics">
+        <span class="ico">📥</span> Stáhnout iCal (.ics)
+      </a>
+    </div>
     </div>
   </article><article class="card" data-calendar="Trhové Sviny a okolí">
     
@@ -224,13 +287,48 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
         <span class="item">🗂️ Trhové Sviny a okolí</span>
       </div>
       
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=P%C3%B3dium%20Ne%C5%BEetice&amp;dates=20260718/20260719&amp;details=&amp;location=Ne%C5%BEetice&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+        <span class="ico">🗓️</span> Přidat do Google kalendáře
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AgzYP6ZjBCRs8jBi0Emuxb3%2F0%40mks-events%0D%0ADTSTAMP%3A20251012T214442Z%0D%0ASUMMARY%3AP%C3%B3dium%20Ne%C5%BEetice%0D%0ADTSTART%3BVALUE%3DDATE%3A20260718%0D%0ADTEND%3BVALUE%3DDATE%3A20260719%0D%0ALOCATION%3ANe%C5%BEetice%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2026-07-18-podium-nezetice.ics">
+        <span class="ico">📥</span> Stáhnout iCal (.ics)
+      </a>
+    </div>
     </div>
   </article></div>
   </div>
+
+  <!-- LIGHTBOX overlay -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <img id="lightbox-img" alt="">
+  </div>
+
 <script>
 /* auto-resize pro iframe */
 function sendHeight(){var h=document.body.scrollHeight; parent&&parent.postMessage&&parent.postMessage({type:'resize-iframe',height:h},'*');}
 window.addEventListener('load',sendHeight);window.addEventListener('resize',sendHeight);setTimeout(sendHeight,300);
+
+/* LIGHTBOX */
+(function(){
+  var box=document.getElementById('lightbox');
+  var img=document.getElementById('lightbox-img');
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    if(t && t.tagName==='IMG' && t.classList.contains('poster')){
+      img.src=t.currentSrc||t.src;
+      box.classList.add('open');
+      box.setAttribute('aria-hidden','false');
+      e.preventDefault();
+    }else if(t===box){
+      box.classList.remove('open'); box.setAttribute('aria-hidden','true'); img.src='';
+    }
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){ box.classList.remove('open'); box.setAttribute('aria-hidden','true'); img.src=''; }
+  });
+})();
 
 /* když se plakát nenačte, schovej levý sloupec, karta zůstane */
 document.addEventListener('error', function(e){
