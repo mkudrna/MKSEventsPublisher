@@ -3,29 +3,61 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nadcházející akce</title><meta name="color-scheme" content="light dark">
 <style>
-:root{--bg:#0b0b10;--card:#12121a;--ink:#e9e9f1;--muted:#acafbd;--accent:#79b8ff}
+:root{--bg:#0b0b10;--card:#12121a;--ink:#0e0f12;--muted:#606573}
 *{box-sizing:border-box}
 body{margin:0;padding:16px;background:#fff1ea;color:#222;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-.wrapper{max-width:880px;margin:0 auto}
-h1{margin:8px 0 14px;font-size:clamp(22px,3.2vw,28px)}
-.grid{display:grid;gap:14px;grid-template-columns:1fr}
-.card{display:flex;flex-direction:column;gap:12px;background:#fff;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:14px}
-.hero{position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:16/9;max-height:480px}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
-.hero.square{aspect-ratio:1/1}
-.hero.landscape{aspect-ratio:4/3}
-.hero.portrait{aspect-ratio:3/4}
-.body{display:block}
-h2{margin:0 0 6px;font-size:20px;line-height:1.3}
-.meta{display:flex;flex-wrap:wrap;gap:8px 14px;color:#555;font-size:14px;margin:6px 0 4px}
+.wrapper{max-width:980px;margin:0 auto}
+h1{margin:8px 0 16px;font-size:clamp(22px,3.2vw,28px)}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
+
+/* karta */
+.card{
+  display:flex; gap:16px; align-items:flex-start;
+  background:#fff; border-radius:16px; padding:16px;
+  box-shadow:0 6px 24px rgba(0,0,0,.08);
+}
+
+/* levý sloupec s plakátem */
+.media{
+  flex:0 0 320px; /* šířka sloupce na desktopu */
+  max-width:320px;
+  align-self:flex-start;
+}
+.poster-wrap{
+  background:#fff; border-radius:12px; overflow:hidden;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.poster{
+  display:block; width:100%; height:auto; /* žádný ořez */
+  max-height:620px; /* strop, ať karta není nekonečná */
+}
+
+/* pravý sloupec s textem */
+.body{flex:1; min-width:0}
+.title{margin:0 0 6px; font-size:22px; line-height:1.25}
+.meta{
+  display:flex; flex-wrap:wrap; gap:8px 16px;
+  color:#555; font-size:14px; margin:6px 0 10px;
+}
 .desc{color:#333}
-@media(prefers-color-scheme:dark){
-  body{background:var(--bg);color:var(--ink)}
-  .card{background:var(--card);box-shadow:0 6px 30px rgba(0,0,0,.35)}
-  .meta{color:var(--muted)}
+
+/* responsivní rozpad do 1 sloupce */
+@media (max-width: 680px){
+  .card{flex-direction:column}
+  .media{flex:unset; max-width:100%}
+  .poster{max-height:70vh}
+}
+
+/* dark mode */
+@media (prefers-color-scheme:dark){
+  body{background:var(--bg); color:#e9e9f1}
+  .card{background:var(--card); box-shadow:0 6px 30px rgba(0,0,0,.35)}
+  .poster-wrap{border-color:rgba(255,255,255,.08); background:#0c0c12}
+  .meta{color:#acafbd}
   .desc{color:#dfe3ee}
 }
-a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
+a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
 </style>
 <script type="application/ld+json">
 [
@@ -92,9 +124,13 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
   <div class="wrapper">
     <h1>Nadcházející akce</h1>
     <div class="grid"><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-10-13-zs-nataceni.png" alt=""></div>
+    <div class="media">
+         <div class="poster-wrap">
+           <img class="poster" loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-10-13-zs-nataceni.png" alt="">
+         </div>
+       </div>
     <div class="body">
-      <h2>ZŠ - natáčení</h2>
+      <h2 class="title">ZŠ - natáčení</h2>
       <div class="meta">
         <div>📅 13.10.2025 · ⏰ 12:00–0:00</div>
         
@@ -103,9 +139,13 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
       
     </div>
   </article><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-10-20-zs-nataceni.png" alt=""></div>
+    <div class="media">
+         <div class="poster-wrap">
+           <img class="poster" loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-10-20-zs-nataceni.png" alt="">
+         </div>
+       </div>
     <div class="body">
-      <h2>ZŠ - natáčení</h2>
+      <h2 class="title">ZŠ - natáčení</h2>
       <div class="meta">
         <div>📅 20.10.2025 · ⏰ 12:00–0:00</div>
         
@@ -114,9 +154,13 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
       
     </div>
   </article><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-11-17-zastupitelstvo.jpg" alt=""></div>
+    <div class="media">
+         <div class="poster-wrap">
+           <img class="poster" loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-11-17-zastupitelstvo.jpg" alt="">
+         </div>
+       </div>
     <div class="body">
-      <h2>Zastupitelstvo</h2>
+      <h2 class="title">Zastupitelstvo</h2>
       <div class="meta">
         <div>📅 17.11.2025 · ⏰ 17:00–19:00</div>
         
@@ -125,9 +169,13 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
       
     </div>
   </article><article class="card">
-    <div class="hero"><img loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-12-11-od-hospody-k-hospode-v.png" alt=""></div>
+    <div class="media">
+         <div class="poster-wrap">
+           <img class="poster" loading="lazy" decoding="async" src="https://mkudrna.github.io/MKSakce/img/2025-12-11-od-hospody-k-hospode-v.png" alt="">
+         </div>
+       </div>
     <div class="body">
-      <h2>Od hospody k hospodě V</h2>
+      <h2 class="title">Od hospody k hospodě V</h2>
       <div class="meta">
         <div>📅 11.12.2025 · ⏰ 18:00–20:00</div>
         <div>📍 Sál KD</div>
@@ -138,7 +186,7 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
   </article><article class="card">
     
     <div class="body">
-      <h2>ZŠ - předávání vysvědčení</h2>
+      <h2 class="title">ZŠ - předávání vysvědčení</h2>
       <div class="meta">
         <div>📅 29.6.2026 · ⏰ 17:00–19:00</div>
         
@@ -149,7 +197,7 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
   </article><article class="card">
     
     <div class="body">
-      <h2>Pódium Nežetice</h2>
+      <h2 class="title">Pódium Nežetice</h2>
       <div class="meta">
         <div>📅 18.7.2026</div>
         <div>📍 Nežetice</div>
@@ -160,25 +208,15 @@ a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
   </article></div>
   </div>
 <script>
-function classifyHero(img){
-  try{
-    var w=img.naturalWidth||0,h=img.naturalHeight||0,wrap=img.closest('.hero');
-    if(!wrap) return;
-    wrap.classList.remove('square','landscape','portrait');
-    if (w && h){
-      var r=w/h;
-      if (r>1.25 && r<1.45){ wrap.classList.add('landscape'); }
-      else if (r>=0.9 && r<=1.1){ wrap.classList.add('square'); }
-      else if (r<0.9){ wrap.classList.add('portrait'); }
-    }
-  }catch(e){}
-}
-document.querySelectorAll('.hero img').forEach(function(img){
-  if (img.complete){ classifyHero(img); }
-  img.addEventListener('load', function(){ classifyHero(img); });
-  img.addEventListener('error', function(){ var hero=img.closest('.hero'); if(hero) hero.style.display='none'; window.dispatchEvent(new Event('resize')); });
-});
+/* auto-resize pro iframe */
 function sendHeight(){var h=document.body.scrollHeight; parent&&parent.postMessage&&parent.postMessage({type:'resize-iframe',height:h},'*');}
 window.addEventListener('load',sendHeight);window.addEventListener('resize',sendHeight);setTimeout(sendHeight,300);
+
+/* když se plakát nenačte, schovej levý sloupec, karta zůstane */
+document.addEventListener('error', function(e){
+  var t=e.target; if(t && t.tagName==='IMG' && t.classList.contains('poster')){
+    var wrap=t.closest('.media'); if(wrap) wrap.style.display='none'; sendHeight();
+  }
+}, true);
 </script>
 </body></html>
