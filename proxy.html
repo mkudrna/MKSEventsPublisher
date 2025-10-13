@@ -8,70 +8,53 @@
 <style>
 :root{--bg:#0b0b10;--card:#12121a;--ink:#0e0f12;--muted:#606573}
 *{box-sizing:border-box}
-body{
-  margin:0;padding:16px;background:linear-gradient(180deg,#fff6f2,#fff0ec);
-  color:#222;font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu
-}
+body{ margin:0;padding:16px;background:linear-gradient(180deg,#fff6f2,#fff0ec);
+      color:#222;font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu }
 .wrapper{max-width:980px;margin:0 auto}
 .grid{display:grid;gap:16px;grid-template-columns:1fr}
 
 /* karta */
-.card{
-  display:flex; gap:18px; align-items:flex-start;
-  background:#fff; border-radius:16px; padding:18px;
-  box-shadow:0 6px 24px rgba(0,0,0,.08);
-  border-left:8px solid var(--bar,#f4a261); /* barevný proužek dle kalendáře */
-  transition: transform .15s ease, box-shadow .2s ease;
-}
+.card{ display:flex; gap:18px; align-items:flex-start; background:#fff; border-radius:16px; padding:18px;
+       box-shadow:0 6px 24px rgba(0,0,0,.08); border-left:8px solid var(--bar,#f4a261);
+       transition: transform .15s ease, box-shadow .2s ease; }
 .card:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.12); }
 
 /* levý sloupec s plakátem */
 .media{ flex:0 0 340px; max-width:340px; align-self:flex-start; }
-.poster-wrap{
-  background:#fff; border-radius:12px; overflow:hidden;
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 4px 12px rgba(0,0,0,.06);
-  cursor: zoom-in;
-}
+.poster-wrap{ background:#fff; border-radius:12px; overflow:hidden; border:1px solid rgba(0,0,0,.06);
+              box-shadow:0 4px 12px rgba(0,0,0,.06); cursor: zoom-in; }
 .poster{ display:block; width:100%; height:auto; max-height:640px;
-  transition: transform .3s ease, filter .3s ease;
-}
+         transition: transform .3s ease, filter .3s ease; }
 .card:hover .poster{ transform:scale(1.03); filter:brightness(1.05); }
 
-/* pravý sloupec s textem – větší typografie */
+/* pravý sloupec s textem */
 .body{flex:1; min-width:0}
 .title{margin:0 0 10px; font-size:26px; line-height:1.25; font-weight:700; color:#202225}
 .meta{ display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center; margin:0 0 12px; }
-.badge{
-  display:inline-block; background:#f5f6fa; color:#3d4051;
-  border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600;
-}
+.badge{ display:inline-block; background:#f5f6fa; color:#3d4051; border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600; }
 .meta .item{ color:#555; font-size:15px; }
 .desc{ color:#2a2d3a; font-size:17px }
 
 /* akční tlačítka */
 .actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px }
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  border:1px solid rgba(0,0,0,.1); background:#fff;
-  padding:8px 12px; border-radius:10px; font-weight:600; font-size:14px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04); cursor:pointer; text-decoration:none; color:#1a1f36;
-}
+.btn{ display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(0,0,0,.1); background:#fff;
+      padding:8px 12px; border-radius:10px; font-weight:600; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,.04);
+      cursor:pointer; text-decoration:none; color:#1a1f36; }
 .btn:hover{ box-shadow:0 6px 18px rgba(0,0,0,.10) }
 .btn .ico{ font-size:16px }
 
-/* mapování barev podle kalendáře (substring match) */
-.card[data-calendar*="KD"]{ --bar:#e76f51; }           /* Kulturní dům, Sál KD... */
-.card[data-calendar*="Hamr"]{ --bar:#2a9d8f; }         /* Buškův hamr */
-.card[data-calendar*="Taneční"]{ --bar:#e9c46a; }      /* Taneční sál */
-.card[data-calendar*="Sviny"]{ --bar:#264653; }        /* Trhové Sviny a okolí */
+/* barvy podle kalendáře */
+.card[data-calendar*="KD"]{ --bar:#e76f51; }
+.card[data-calendar*="Hamr"]{ --bar:#2a9d8f; }
+.card[data-calendar*="Taneční"]{ --bar:#e9c46a; }
+.card[data-calendar*="Sviny"]{ --bar:#264653; }
 
 /* LIGHTBOX */
 .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:9999; }
 .lightbox.open{ display:flex }
 .lightbox img{ max-width:94vw; max-height:94vh; box-shadow:0 10px 40px rgba(0,0,0,.5); border-radius:12px }
 
-/* responsivní rozpad do 1 sloupce */
+/* responsivní */
 @media (max-width: 740px){
   .card{flex-direction:column}
   .media{flex:unset; max-width:100%}
@@ -97,7 +80,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
   "@type": "Event",
   "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "startDate": "2025-10-13T12:00:00+02:00",
-  "endDate": "2025-10-13T00:00:00+02:00",
+  "endDate": "2025-10-13T13:00:00+02:00",
   "description": "Zveme Vás na podzimní turistický pochod krajinou Trhovosvinenska. Těšte se na tři trasy - 9 km, 20 km a 36 km. Start v Kulturním a informačním centru, Žižkovo nám. 40, od 8:00 - 10:00 hodin. Cíl na Buškově hamru od 11 - 17 hodin. \nStartovné 200 Kč\nRegistrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informačním centru (tel.: 386 301 488, e-mail: kic@tsviny.cz)"
 }
 {
@@ -105,7 +88,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
   "@type": "Event",
   "name": "ZŠ - natáčení",
   "startDate": "2025-10-20T12:00:00+02:00",
-  "endDate": "2025-10-20T00:00:00+02:00",
+  "endDate": "2025-10-20T13:00:00+02:00",
   "description": "Koncert hudebního uskupení Žestě dvěstě."
 }
 {
@@ -159,7 +142,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
       <h2 class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
       <div class="meta">
         <span class="badge">📅 13.10.2025</span>
-        <span class="badge">⏰ 12:00 – 00:00</span>
+        <span class="badge">⏰ 12:00 – 13:00</span>
         
         <span class="item">🗂️ Taneční sál</span>
       </div>
@@ -168,7 +151,7 @@ Startovné 200 Kč
 Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informačním centru (tel.: 386 301 488, e-mail: kic@tsviny.cz)</div>
       
     <div class="actions">
-      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit&amp;dates=20251013T100000Z/20251012T220000Z&amp;details=Zveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%0AStartovn%C3%A9%20200%20K%C4%8D%0ARegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%2C%20e-mail%3A%20kic%40tsviny.cz)&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit&amp;dates=20251013T100000Z/20251013T110000Z&amp;details=Zveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%0AStartovn%C3%A9%20200%20K%C4%8D%0ARegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%2C%20e-mail%3A%20kic%40tsviny.cz)&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
         <span class="ico">🗓️</span> Přidat do Google kalendáře
       </a>
       <a class="btn" href="webcal://calendar.google.com/calendar/ical/8f0b1edea9e8f5ebb3c66b6cfbe23e4b3c727f7e4beeecf54a0b36a5e47831fb@group.calendar.google.com/public/basic.ics">
@@ -186,14 +169,14 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
       <h2 class="title">ZŠ - natáčení</h2>
       <div class="meta">
         <span class="badge">📅 20.10.2025</span>
-        <span class="badge">⏰ 12:00 – 00:00</span>
+        <span class="badge">⏰ 12:00 – 13:00</span>
         
         <span class="item">🗂️ Kulturní dům</span>
       </div>
       <div class="desc">Koncert hudebního uskupení Žestě dvěstě.</div>
       
     <div class="actions">
-      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD&amp;dates=20251020T100000Z/20251019T220000Z&amp;details=Koncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD&amp;dates=20251020T100000Z/20251020T110000Z&amp;details=Koncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
         <span class="ico">🗓️</span> Přidat do Google kalendáře
       </a>
       <a class="btn" href="webcal://calendar.google.com/calendar/ical/8f0b1edea9e8f5ebb3c66b6cfbe23e4b3c727f7e4beeecf54a0b36a5e47831fb@group.calendar.google.com/public/basic.ics">
@@ -306,7 +289,6 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
   </div>
 
 <script>
-/* auto-resize pro iframe */
 function sendHeight(){var h=document.body.scrollHeight; parent&&parent.postMessage&&parent.postMessage({type:'resize-iframe',height:h},'*');}
 window.addEventListener('load',sendHeight);window.addEventListener('resize',sendHeight);setTimeout(sendHeight,300);
 
