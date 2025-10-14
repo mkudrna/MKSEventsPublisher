@@ -43,19 +43,27 @@ body{ margin:0;padding:16px;background:linear-gradient(180deg,var(--bg),#fff0ec)
 /* pravý sloupec */
 .body{flex:1; min-width:0; display:flex; flex-direction:column;}
 
-/* META: vše doprava – pořadí: místo (pokud je) → datum → čas */
-.meta{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--divider);
-       justify-content:flex-end; flex-wrap:wrap; }
-.badge{ display:inline-block; background:var(--chip); color:#3d4051; border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600; }
-.meta .item{ color:var(--muted); font-size:15px; }
+/* META: vše doprava – pořadí: 📍Místo → 📅Datum → ⏰Čas, vše jako badge */
+.meta{
+  display:flex; align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid var(--divider); justify-content:flex-end; flex-wrap:wrap;
+}
+.badge{
+  display:inline-block; background:var(--chip); color:#3d4051;
+  border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600;
+}
+/* případné odlišnosti pro location chip si můžeme přidat sem */
+.badge--location{}
 
 /* TITULEK a POPIS – bez čar */
 .title{ margin:0; padding:12px 0 6px; font-size:26px; line-height:1.25; font-weight:700; }
 .desc{ color:#2a2d3a; font-size:17px; padding:6px 0 12px; }
 
 /* tlačítka – čára jen tady */
-.actions{ margin-top:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%;
-          border-top:1px solid var(--divider); padding-top:12px; }
+.actions{
+  margin-top:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%;
+  border-top:1px solid var(--divider); padding-top:12px;
+}
 .btn{ display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(0,0,0,.1); background:#fff;
       padding:8px 12px; border-radius:10px; font-weight:600; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,.04);
       cursor:pointer; text-decoration:none; color:#1a1f36; }
@@ -148,7 +156,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD&amp;dates=20251020T100000Z/20251020T110000Z&amp;details=Koncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
         <span class="ico">🗓️</span> Přidat do Google kalendáře
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Akc8Kpw3aKDYMJZ5YaK1%2FXQOe%40mks-events%0D%0ADTSTAMP%3A20251014T114638Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD%0D%0ADTSTART%3A20251020T100000Z%0D%0ADTEND%3A20251020T110000Z%0D%0ADESCRIPTION%3AKoncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-20-zs-nataceni.ics">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Akc8Kpw3aKDYMJZ5YaK1%2FXQOe%40mks-events%0D%0ADTSTAMP%3A20251014T115148Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD%0D%0ADTSTART%3A20251020T100000Z%0D%0ADTEND%3A20251020T110000Z%0D%0ADESCRIPTION%3AKoncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-20-zs-nataceni.ics">
         <span class="ico">🍎</span> Přidat do Apple kalendáře
       </a>
     </div>
@@ -169,7 +177,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Zastupitelstvo&amp;dates=20251117T160000Z/20251117T180000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
         <span class="ico">🗓️</span> Přidat do Google kalendáře
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AoWAXio78qQ2BSoc5t3X1dePn%40mks-events%0D%0ADTSTAMP%3A20251014T114639Z%0D%0ASUMMARY%3AZastupitelstvo%0D%0ADTSTART%3A20251117T160000Z%0D%0ADTEND%3A20251117T180000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-11-17-zastupitelstvo.ics">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AoWAXio78qQ2BSoc5t3X1dePn%40mks-events%0D%0ADTSTAMP%3A20251014T115148Z%0D%0ASUMMARY%3AZastupitelstvo%0D%0ADTSTART%3A20251117T160000Z%0D%0ADTEND%3A20251117T180000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-11-17-zastupitelstvo.ics">
         <span class="ico">🍎</span> Přidat do Apple kalendáře
       </a>
     </div>
@@ -179,7 +187,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
     <div class="body">
       
     <div class="meta">
-      <span class="item">📍 Sál KD</span>
+      <span class="badge badge--location">📍 Sál KD</span>
       <span class="badge">📅 11.12.2025</span>
       <span class="badge">⏰ 18:00 – 20:00</span>
     </div>
@@ -190,7 +198,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Od%20hospody%20k%20hospod%C4%9B%20V&amp;dates=20251211T170000Z/20251211T190000Z&amp;details=cca%2025%20lid%C3%AD&amp;location=S%C3%A1l%20KD&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
         <span class="ico">🗓️</span> Přidat do Google kalendáře
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2FWXLxwf%2BNqKQOQesUgTIh%2Bp6%40mks-events%0D%0ADTSTAMP%3A20251014T114639Z%0D%0ASUMMARY%3AOd%20hospody%20k%20hospod%C4%9B%20V%0D%0ADTSTART%3A20251211T170000Z%0D%0ADTEND%3A20251211T190000Z%0D%0ALOCATION%3AS%C3%A1l%20KD%0D%0ADESCRIPTION%3Acca%2025%20lid%C3%AD%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-12-11-od-hospody-k-hospode-v.ics">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2FWXLxwf%2BNqKQOQesUgTIh%2Bp6%40mks-events%0D%0ADTSTAMP%3A20251014T115149Z%0D%0ASUMMARY%3AOd%20hospody%20k%20hospod%C4%9B%20V%0D%0ADTSTART%3A20251211T170000Z%0D%0ADTEND%3A20251211T190000Z%0D%0ALOCATION%3AS%C3%A1l%20KD%0D%0ADESCRIPTION%3Acca%2025%20lid%C3%AD%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-12-11-od-hospody-k-hospode-v.ics">
         <span class="ico">🍎</span> Přidat do Apple kalendáře
       </a>
     </div>
@@ -211,7 +219,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20p%C5%99ed%C3%A1v%C3%A1n%C3%AD%20vysv%C4%9Bd%C4%8Den%C3%AD&amp;dates=20260629T150000Z/20260629T170000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
         <span class="ico">🗓️</span> Přidat do Google kalendáře
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Ayy0A2g1RyZzRGtYJEJ1QamF%2F%40mks-events%0D%0ADTSTAMP%3A20251014T114637Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20p%C5%99ed%C3%A1v%C3%A1n%C3%AD%20vysv%C4%9Bd%C4%8Den%C3%AD%0D%0ADTSTART%3A20260629T150000Z%0D%0ADTEND%3A20260629T170000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2026-06-29-zs-predavani-vysvedceni.ics">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Ayy0A2g1RyZzRGtYJEJ1QamF%2F%40mks-events%0D%0ADTSTAMP%3A20251014T115147Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20p%C5%99ed%C3%A1v%C3%A1n%C3%AD%20vysv%C4%9Bd%C4%8Den%C3%AD%0D%0ADTSTART%3A20260629T150000Z%0D%0ADTEND%3A20260629T170000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2026-06-29-zs-predavani-vysvedceni.ics">
         <span class="ico">🍎</span> Přidat do Apple kalendáře
       </a>
     </div>
@@ -221,7 +229,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
     <div class="body">
       
     <div class="meta">
-      <span class="item">📍 Nežetice</span>
+      <span class="badge badge--location">📍 Nežetice</span>
       <span class="badge">📅 18.7.2026</span>
       
     </div>
@@ -232,7 +240,7 @@ a{color:#0b69d7; text-decoration:none} a:hover{text-decoration:underline}
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=P%C3%B3dium%20Ne%C5%BEetice&amp;dates=20260718/20260719&amp;details=&amp;location=Ne%C5%BEetice&amp;sf=true&amp;output=xml" target="_blank" rel="noopener">
         <span class="ico">🗓️</span> Přidat do Google kalendáře
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AgzYP6ZjBCRs8jBi0Emuxb3%2F0%40mks-events%0D%0ADTSTAMP%3A20251014T114638Z%0D%0ASUMMARY%3AP%C3%B3dium%20Ne%C5%BEetice%0D%0ADTSTART%3BVALUE%3DDATE%3A20260718%0D%0ADTEND%3BVALUE%3DDATE%3A20260719%0D%0ALOCATION%3ANe%C5%BEetice%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2026-07-18-podium-nezetice.ics">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AgzYP6ZjBCRs8jBi0Emuxb3%2F0%40mks-events%0D%0ADTSTAMP%3A20251014T115148Z%0D%0ASUMMARY%3AP%C3%B3dium%20Ne%C5%BEetice%0D%0ADTSTART%3BVALUE%3DDATE%3A20260718%0D%0ADTEND%3BVALUE%3DDATE%3A20260719%0D%0ALOCATION%3ANe%C5%BEetice%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2026-07-18-podium-nezetice.ics">
         <span class="ico">🍎</span> Přidat do Apple kalendáře
       </a>
     </div>
@@ -253,11 +261,13 @@ function slugify(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'
 
 /* klientské vykreslení karty */
 function renderCardHTML(d){
-  var media = d.image? '<div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="'+ha(d.image)+'" alt=""></div></div>' : '';
+  var media = d.image
+    ? '<div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="'+ha(d.image)+'" alt=""></div></div>'
+    : '';
   var meta = '<div class="meta">'+
-               (d.location?'<span class="item">📍 '+h(d.location)+'</span>':'')+
+               (d.location ? '<span class="badge badge--location">📍 '+h(d.location)+'</span>' : '')+
                '<span class="badge">📅 '+h(d.dateBadge)+'</span>'+
-               (d.showTime?' <span class="badge">⏰ '+h(d.timeText)+'</span>':'')+
+               (d.showTime ? ' <span class="badge">⏰ '+h(d.timeText)+'</span>' : '')+
              '</div>';
   var title = '<h2 class="title">'+h(d.title)+'</h2>';
   var desc  = d.details? '<div class="desc">'+h(d.details)+'</div>' : '';
