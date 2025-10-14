@@ -8,22 +8,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* výchozí vzhled pro samostatné zobrazení */
-  --bg:#fff6f2; 
-  --bg2:#fff0ec;
+  --bg:#ffffff;                     /* jednotné bílé pozadí */
   --card:#fff; --text:#202225; --muted:#555; --chip:#f5f6fa; --divider:#e8e8ee;
   --rail:56px;
+
+  --panel-radius:16px;              /* panel okolo obsahu */
+  --panel-shadow:0 10px 40px rgba(0,0,0,.08);
+  --panel-border:1px solid #eee;
 }
 *{box-sizing:border-box}
-body{ margin:0;padding:16px;background:linear-gradient(180deg,var(--bg),var(--bg2));
-      color:var(--text);font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu }
-.wrapper{max-width:980px;margin:0 auto}
-.grid{display:grid;gap:16px;grid-template-columns:1fr}
+html,body{ height:auto; }
+body{
+  margin:0;
+  padding:16px;
+  background:var(--bg);             /* žádný gradient */
+  color:var(--text);
+  font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu
+}
 
-/* ====== EMBED režim (iframe ?embed=1) – čistě BÍLÉ pozadí ====== */
-body.embed{ padding:0; background:#ffffff !important; }
-body.embed .wrapper{ max-width:980px; margin:0 auto; }
-body.embed .grid{ gap:16px; }
+/* Hlavní panel – stejné v embedu i mimo něj */
+.wrapper{
+  max-width:980px;
+  margin:24px auto;                 /* okraje od okolí */
+  background:#fff;
+  border-radius:var(--panel-radius);
+  box-shadow:var(--panel-shadow);
+  border:var(--panel-border);
+  padding:16px;
+}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
 
 /* karta + kolejnice */
 .card{
@@ -31,7 +44,7 @@ body.embed .grid{ gap:16px; }
   display:flex; gap:18px; align-items:stretch;
   background:var(--card); border-radius:16px; padding:18px;
   padding-left:calc(18px + var(--rail));
-  box-shadow:0 6px 24px rgba(0,0,0,.08);
+  box-shadow:0 6px 24px rgba(0,0,0,.06);
   transition: transform .15s ease, box-shadow .2s ease;
 }
 .card::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:var(--rail);
@@ -51,7 +64,7 @@ body.embed .grid{ gap:16px; }
 /* pravý sloupec */
 .body{flex:1; min-width:0; display:flex; flex-direction:column;}
 
-/* META: vpravo – 📍Místo → 📅Datum → ⏰Čas, vše jako badge */
+/* META */
 .meta{
   display:flex; align-items:center; gap:10px; padding:10px 0;
   border-bottom:1px solid var(--divider); justify-content:flex-end; flex-wrap:wrap;
@@ -60,17 +73,16 @@ body.embed .grid{ gap:16px; }
   display:inline-block; background:var(--chip); color:#3d4051;
   border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600;
 }
-.badge--location{}
 
-/* TITULEK a POPIS – bez čar */
+/* TITULEK a POPIS */
 .title{ margin:0; padding:12px 0 6px; font-size:26px; line-height:1.25; font-weight:700; }
 .desc{ color:#2a2d3a; font-size:17px; padding:6px 0 12px; }
 
-/* tlačítka – čára jen tady */
+/* tlačítka */
 .actions{
   margin-top:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%;
   border-top:1px solid var(--divider); padding-top:12px;
-  container-type:inline-size; /* pro container query */
+  container-type:inline-size;
 }
 .btn{
   display:inline-flex; align-items:center; gap:8px;
@@ -81,10 +93,10 @@ body.embed .grid{ gap:16px; }
   text-decoration:none;
 }
 .btn:hover,.btn:focus{ text-decoration:none }
-.btn .ico{ font-size:16px; line-height:1; text-decoration:none }
+.btn .ico{ font-size:16px; line-height:1 }
 .btn .label{ display:inline }
 
-/* —— Compact tlačítka (jen ikonky) — čistě CSS —— */
+/* Compact tlačítka */
 @supports (container-type: inline-size) {
   @container (max-width: 440px) {
     .actions{ gap:12px }
@@ -115,32 +127,21 @@ body.embed .grid{ gap:16px; }
   .media{ flex:unset; max-width:100% }
 }
 
-/* globální odkazy */
+/* odkazy */
 a{ color:#0b69d7; text-decoration:none }
 a:hover{ text-decoration:underline }
 .actions .btn, .actions .btn:hover, .actions .btn:focus{ text-decoration:none }
 
-/* ========= LIGHTBOX (overlay) ========= */
+/* LIGHTBOX */
 .lightbox{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:2rem;
-  background:rgba(0,0,0,.72);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .2s ease;
-  z-index:9999;
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  padding:2rem; background:rgba(0,0,0,.72); opacity:0; pointer-events:none;
+  transition:opacity .2s ease; z-index:9999;
 }
 .lightbox.open{ opacity:1; pointer-events:auto; }
 .lightbox img{
-  max-width:min(96vw,1600px);
-  max-height:90vh;
-  width:auto; height:auto;
-  border-radius:12px;
-  box-shadow:0 10px 50px rgba(0,0,0,.5);
+  max-width:min(96vw,1600px); max-height:90vh; width:auto; height:auto;
+  border-radius:12px; box-shadow:0 10px 50px rgba(0,0,0,.5);
 }
 body.lb-open{ overflow:hidden; }
 </style>
@@ -257,7 +258,7 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit&amp;dates=20251013T100000Z/20251013T110000Z&amp;details=Zveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%0AStartovn%C3%A9%20200%20K%C4%8D%0ARegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%2C%20e-mail%3A%20kic%40tsviny.cz)&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Au9ntWTyhCBMzDtBr7a2ftpcn%40mks-events%0D%0ADTSTAMP%3A20251014T212659Z%0D%0ASUMMARY%3ALorem%20ipsum%20dolor%20sit%20amet%5C%2C%20consectetur%20adipiscing%20elit%0D%0ADTSTART%3A20251013T100000Z%0D%0ADTEND%3A20251013T110000Z%0D%0ADESCRIPTION%3AZveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%5C%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%5C%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%5C%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%5CnStartovn%C3%A9%20200%20K%C4%8D%5CnRegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%5C%2C%20e-mail%3A%20kic%40tsviny.cz)%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-2025-10-13.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Au9ntWTyhCBMzDtBr7a2ftpcn%40mks-events%0D%0ADTSTAMP%3A20251014T213440Z%0D%0ASUMMARY%3ALorem%20ipsum%20dolor%20sit%20amet%5C%2C%20consectetur%20adipiscing%20elit%0D%0ADTSTART%3A20251013T100000Z%0D%0ADTEND%3A20251013T110000Z%0D%0ADESCRIPTION%3AZveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%5C%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%5C%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%5C%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%5CnStartovn%C3%A9%20200%20K%C4%8D%5CnRegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%5C%2C%20e-mail%3A%20kic%40tsviny.cz)%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-2025-10-13.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -280,7 +281,7 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Podzimn%C3%AD%20Svinensk%C3%A9%20v%C3%BD%C5%A1lapy&amp;dates=20251018T060000Z/20251018T150000Z&amp;details=Zveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%0AStartovn%C3%A9%20200%20K%C4%8D%0ARegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%2C%20e-mail%3A%20kic%40tsviny.cz)&amp;location=Kulturn%C3%AD%20a%20informa%C4%8Dn%C3%AD%20centru%20a%20Bu%C5%A1k%C5%AFv%20hamr&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ABZuiOb7XvN8%2Bue8IyBF6Ysog%40mks-events%0D%0ADTSTAMP%3A20251014T212656Z%0D%0ASUMMARY%3APodzimn%C3%AD%20Svinensk%C3%A9%20v%C3%BD%C5%A1lapy%0D%0ADTSTART%3A20251018T060000Z%0D%0ADTEND%3A20251018T150000Z%0D%0ALOCATION%3AKulturn%C3%AD%20a%20informa%C4%8Dn%C3%AD%20centru%20a%20Bu%C5%A1k%C5%AFv%20hamr%0D%0ADESCRIPTION%3AZveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%5C%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%5C%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%5C%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%5CnStartovn%C3%A9%20200%20K%C4%8D%5CnRegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%5C%2C%20e-mail%3A%20kic%40tsviny.cz)%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="podzimni-svinenske-vyslapy-2025-10-18.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ABZuiOb7XvN8%2Bue8IyBF6Ysog%40mks-events%0D%0ADTSTAMP%3A20251014T213435Z%0D%0ASUMMARY%3APodzimn%C3%AD%20Svinensk%C3%A9%20v%C3%BD%C5%A1lapy%0D%0ADTSTART%3A20251018T060000Z%0D%0ADTEND%3A20251018T150000Z%0D%0ALOCATION%3AKulturn%C3%AD%20a%20informa%C4%8Dn%C3%AD%20centru%20a%20Bu%C5%A1k%C5%AFv%20hamr%0D%0ADESCRIPTION%3AZveme%20V%C3%A1s%20na%20podzimn%C3%AD%20turistick%C3%BD%20pochod%20krajinou%20Trhovosvinenska.%20T%C4%9B%C5%A1te%20se%20na%20t%C5%99i%20trasy%20-%209%20km%5C%2C%2020%20km%20a%2036%20km.%20Start%20v%20Kulturn%C3%ADm%20a%20informa%C4%8Dn%C3%ADm%20centru%5C%2C%20%C5%BDi%C5%BEkovo%20n%C3%A1m.%2040%5C%2C%20od%208%3A00%20-%2010%3A00%20hodin.%20C%C3%ADl%20na%20Bu%C5%A1kov%C4%9B%20hamru%20od%2011%20-%2017%20hodin.%20%5CnStartovn%C3%A9%20200%20K%C4%8D%5CnRegistrace%20na%20str%C3%A1nk%C3%A1ch%20www.kulturavesvinech.cz%20nebo%20v%20Kulturn%C3%ADm%20informa%C4%8Dn%C3%ADm%20centru%20(tel.%3A%20386%20301%20488%5C%2C%20e-mail%3A%20kic%40tsviny.cz)%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="podzimni-svinenske-vyslapy-2025-10-18.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -301,7 +302,7 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD&amp;dates=20251020T100000Z/20251020T110000Z&amp;details=Koncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Akc8Kpw3aKDYMJZ5YaK1%2FXQOe%40mks-events%0D%0ADTSTAMP%3A20251014T212700Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD%0D%0ADTSTART%3A20251020T100000Z%0D%0ADTEND%3A20251020T110000Z%0D%0ADESCRIPTION%3AKoncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="zs-nataceni-2025-10-20.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Akc8Kpw3aKDYMJZ5YaK1%2FXQOe%40mks-events%0D%0ADTSTAMP%3A20251014T213441Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD%0D%0ADTSTART%3A20251020T100000Z%0D%0ADTEND%3A20251020T110000Z%0D%0ADESCRIPTION%3AKoncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="zs-nataceni-2025-10-20.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -322,7 +323,7 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=K%C5%99est%20knihy%20Svinensk%C3%BD%20uli%C4%8Dn%C3%ADk&amp;dates=20251108T140000Z/20251108T170000Z&amp;details=K%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%2C%20jak%20vznikaly%20a%20m%C4%9Bnily%20se%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.&amp;location=Tane%C4%8Dn%C3%AD%20s%C3%A1l%20KD%20Trhov%C3%A9%20Sviny&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ArsGkJCUjeq%2F9XxkecXgqrZzd%40mks-events%0D%0ADTSTAMP%3A20251014T212656Z%0D%0ASUMMARY%3AK%C5%99est%20knihy%20Svinensk%C3%BD%20uli%C4%8Dn%C3%ADk%0D%0ADTSTART%3A20251108T140000Z%0D%0ADTEND%3A20251108T170000Z%0D%0ALOCATION%3ATane%C4%8Dn%C3%AD%20s%C3%A1l%20KD%20Trhov%C3%A9%20Sviny%0D%0ADESCRIPTION%3AK%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%5C%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%5C%2C%20jak%20vznikaly%20a%20m%C4%9Bnily%20se%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="krest-knihy-svinensky-ulicnik-2025-11-08.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ArsGkJCUjeq%2F9XxkecXgqrZzd%40mks-events%0D%0ADTSTAMP%3A20251014T213436Z%0D%0ASUMMARY%3AK%C5%99est%20knihy%20Svinensk%C3%BD%20uli%C4%8Dn%C3%ADk%0D%0ADTSTART%3A20251108T140000Z%0D%0ADTEND%3A20251108T170000Z%0D%0ALOCATION%3ATane%C4%8Dn%C3%AD%20s%C3%A1l%20KD%20Trhov%C3%A9%20Sviny%0D%0ADESCRIPTION%3AK%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%5C%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%5C%2C%20jak%20vznikaly%20a%20m%C4%9Bnily%20se%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="krest-knihy-svinensky-ulicnik-2025-11-08.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -343,7 +344,7 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Zastupitelstvo&amp;dates=20251117T160000Z/20251117T180000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AoWAXio78qQ2BSoc5t3X1dePn%40mks-events%0D%0ADTSTAMP%3A20251014T212700Z%0D%0ASUMMARY%3AZastupitelstvo%0D%0ADTSTART%3A20251117T160000Z%0D%0ADTEND%3A20251117T180000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="zastupitelstvo-2025-11-17.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AoWAXio78qQ2BSoc5t3X1dePn%40mks-events%0D%0ADTSTAMP%3A20251014T213441Z%0D%0ASUMMARY%3AZastupitelstvo%0D%0ADTSTART%3A20251117T160000Z%0D%0ADTEND%3A20251117T180000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="zastupitelstvo-2025-11-17.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -364,7 +365,7 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Od%20hospody%20k%20hospod%C4%9B%20V&amp;dates=20251211T170000Z/20251211T190000Z&amp;details=cca%2025%20lid%C3%AD&amp;location=S%C3%A1l%20KD&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2FWXLxwf%2BNqKQOQesUgTIh%2Bp6%40mks-events%0D%0ADTSTAMP%3A20251014T212701Z%0D%0ASUMMARY%3AOd%20hospody%20k%20hospod%C4%9B%20V%0D%0ADTSTART%3A20251211T170000Z%0D%0ADTEND%3A20251211T190000Z%0D%0ALOCATION%3AS%C3%A1l%20KD%0D%0ADESCRIPTION%3Acca%2025%20lid%C3%AD%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="od-hospody-k-hospode-v-2025-12-11.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2FWXLxwf%2BNqKQOQesUgTIh%2Bp6%40mks-events%0D%0ADTSTAMP%3A20251014T213442Z%0D%0ASUMMARY%3AOd%20hospody%20k%20hospod%C4%9B%20V%0D%0ADTSTART%3A20251211T170000Z%0D%0ADTEND%3A20251211T190000Z%0D%0ALOCATION%3AS%C3%A1l%20KD%0D%0ADESCRIPTION%3Acca%2025%20lid%C3%AD%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="od-hospody-k-hospode-v-2025-12-11.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -376,25 +377,7 @@ Registrace na stránkách www.kulturavesvinech.cz nebo v Kulturním informační
   <div class="lightbox" id="lightbox" aria-hidden="true"><img id="lightbox-img" alt=""></div>
 
 <script>
-/* ====== EMBED konfigurace (barva) z URL ====== */
-(function(){
-  var p = new URLSearchParams(location.search);
-  if (p.get('embed') === '1') {
-    document.body.classList.add('embed');
-    // barvu můžeš přepsat parametrem ?bg=%23ffffff (nebo transparent)
-    var bg = p.get('bg');
-    if (bg) {
-      document.documentElement.style.setProperty('--bg', bg);
-      document.documentElement.style.setProperty('--bg2', bg);
-    } else {
-      // default pro embed: BÍLÁ
-      document.documentElement.style.setProperty('--bg', '#ffffff');
-      document.documentElement.style.setProperty('--bg2', '#ffffff');
-    }
-  }
-})();
-
-window.__REST_EVENTS = [{"title":"Duchem proti své vůli","calendar":"MKS Kulturní dům","location":"","details":"Divadlo","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Duchem%20proti%20sv%C3%A9%20v%C5%AFli&dates=20251217T180000Z/20251217T203000Z&details=Divadlo&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A4NjB5wQA1iMEPt2SlaoMnbLP%40mks-events%0D%0ADTSTAMP%3A20251014T212659Z%0D%0ASUMMARY%3ADuchem%20proti%20sv%C3%A9%20v%C5%AFli%0D%0ADTSTART%3A20251217T180000Z%0D%0ADTEND%3A20251217T203000Z%0D%0ADESCRIPTION%3ADivadlo%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"17.12.2025","showTime":true,"timeText":"19:00 – 21:30"},{"title":"Koledy vystřižené z plechu","calendar":"MKS Kostel Nanebevzetí Panny Marie","location":"Kostel Nanebevzetí Panny Marie v Trhových Svinech.","details":"Koncert hudebního uskupení Žestě dvěstě.","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Koledy%20vyst%C5%99i%C5%BEen%C3%A9%20z%20plechu&dates=20251226T160000Z/20251226T173000Z&details=Koncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.&location=Kostel%20Nanebevzet%C3%AD%20Panny%20Marie%20v%20Trhov%C3%BDch%20Svinech.&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AHkPJNrfMwd1LTTuaHuJVV%2Fa9%40mks-events%0D%0ADTSTAMP%3A20251014T212657Z%0D%0ASUMMARY%3AKoledy%20vyst%C5%99i%C5%BEen%C3%A9%20z%20plechu%0D%0ADTSTART%3A20251226T160000Z%0D%0ADTEND%3A20251226T173000Z%0D%0ALOCATION%3AKostel%20Nanebevzet%C3%AD%20Panny%20Marie%20v%20Trhov%C3%BDch%20Svinech.%0D%0ADESCRIPTION%3AKoncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"26.12.2025","showTime":true,"timeText":"17:00 – 18:30"},{"title":"Hospoda na mýtince","calendar":"MKS Kulturní dům","location":"","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Hospoda%20na%20m%C3%BDtince&dates=20260624/20260625&details=&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ABsy%2Fgp9A4WbvGdRVwyOIHKrY%40mks-events%0D%0ADTSTAMP%3A20251014T212658Z%0D%0ASUMMARY%3AHospoda%20na%20m%C3%BDtince%0D%0ADTSTART%3BVALUE%3DDATE%3A20260624%0D%0ADTEND%3BVALUE%3DDATE%3A20260625%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"24.6.2026","showTime":false,"timeText":""}];
+window.__REST_EVENTS = [{"title":"Duchem proti své vůli","calendar":"MKS Kulturní dům","location":"","details":"Divadlo","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Duchem%20proti%20sv%C3%A9%20v%C5%AFli&dates=20251217T180000Z/20251217T203000Z&details=Divadlo&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A4NjB5wQA1iMEPt2SlaoMnbLP%40mks-events%0D%0ADTSTAMP%3A20251014T213439Z%0D%0ASUMMARY%3ADuchem%20proti%20sv%C3%A9%20v%C5%AFli%0D%0ADTSTART%3A20251217T180000Z%0D%0ADTEND%3A20251217T203000Z%0D%0ADESCRIPTION%3ADivadlo%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"17.12.2025","showTime":true,"timeText":"19:00 – 21:30"},{"title":"Koledy vystřižené z plechu","calendar":"MKS Kostel Nanebevzetí Panny Marie","location":"Kostel Nanebevzetí Panny Marie v Trhových Svinech.","details":"Koncert hudebního uskupení Žestě dvěstě.","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Koledy%20vyst%C5%99i%C5%BEen%C3%A9%20z%20plechu&dates=20251226T160000Z/20251226T173000Z&details=Koncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.&location=Kostel%20Nanebevzet%C3%AD%20Panny%20Marie%20v%20Trhov%C3%BDch%20Svinech.&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AHkPJNrfMwd1LTTuaHuJVV%2Fa9%40mks-events%0D%0ADTSTAMP%3A20251014T213437Z%0D%0ASUMMARY%3AKoledy%20vyst%C5%99i%C5%BEen%C3%A9%20z%20plechu%0D%0ADTSTART%3A20251226T160000Z%0D%0ADTEND%3A20251226T173000Z%0D%0ALOCATION%3AKostel%20Nanebevzet%C3%AD%20Panny%20Marie%20v%20Trhov%C3%BDch%20Svinech.%0D%0ADESCRIPTION%3AKoncert%20hudebn%C3%ADho%20uskupen%C3%AD%20%C5%BDest%C4%9B%20dv%C4%9Bst%C4%9B.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"26.12.2025","showTime":true,"timeText":"17:00 – 18:30"},{"title":"Hospoda na mýtince","calendar":"MKS Kulturní dům","location":"","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Hospoda%20na%20m%C3%BDtince&dates=20260624/20260625&details=&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ABsy%2Fgp9A4WbvGdRVwyOIHKrY%40mks-events%0D%0ADTSTAMP%3A20251014T213438Z%0D%0ASUMMARY%3AHospoda%20na%20m%C3%BDtince%0D%0ADTSTART%3BVALUE%3DDATE%3A20260624%0D%0ADTEND%3BVALUE%3DDATE%3A20260625%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"24.6.2026","showTime":false,"timeText":""}];
 
 /* helpers */
 function h(s){return String(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
@@ -429,12 +412,10 @@ function renderCardHTML(d){
          '</article>';
 }
 
-/* ====== iFrame resize – robustní ====== */
+/* iFrame resize – necháváme kvůli embedu (na samotné stránce nevadí) */
 function postHeight(){
   var h=document.documentElement.scrollHeight || document.body.scrollHeight || 0;
-  if (parent && parent.postMessage) {
-    parent.postMessage({type:'resize-iframe',height:h},'*');
-  }
+  if (parent && parent.postMessage) parent.postMessage({type:'resize-iframe',height:h},'*');
 }
 function sendHeight(){ postHeight(); }
 window.addEventListener('load', sendHeight);
@@ -445,41 +426,17 @@ try{ var ro=new ResizeObserver(function(){ sendHeight(); }); ro.observe(document
 setTimeout(sendHeight,300);
 setTimeout(sendHeight,1200);
 
-/* Lightbox (overlay) */
+/* Lightbox */
 (function(){
-  var box=document.getElementById('lightbox'),
-      img=document.getElementById('lightbox-img');
-
-  function openBox(src, alt){
-    if(!src) return;
-    img.src = src;
-    img.alt = alt || '';
-    box.classList.add('open');
-    box.setAttribute('aria-hidden','false');
-    document.body.classList.add('lb-open');
-    sendHeight();
-  }
-  function closeBox(){
-    box.classList.remove('open');
-    box.setAttribute('aria-hidden','true');
-    document.body.classList.remove('lb-open');
-    setTimeout(function(){ img.src=''; sendHeight(); }, 150);
-  }
-
+  var box=document.getElementById('lightbox'), img=document.getElementById('lightbox-img');
+  function openBox(src, alt){ if(!src) return; img.src=src; img.alt=alt||''; box.classList.add('open'); box.setAttribute('aria-hidden','false'); document.body.classList.add('lb-open'); sendHeight(); }
+  function closeBox(){ box.classList.remove('open'); box.setAttribute('aria-hidden','true'); document.body.classList.remove('lb-open'); setTimeout(function(){ img.src=''; sendHeight(); },150); }
   document.addEventListener('click',function(e){
     var t=e.target;
-    if(t && t.tagName==='IMG' && t.classList.contains('poster')){
-      var src=t.currentSrc||t.src, alt=t.alt||'';
-      e.preventDefault();
-      openBox(src, alt);
-      return;
-    }
-    if(t === box){ e.preventDefault(); closeBox(); }
+    if(t && t.tagName==='IMG' && t.classList.contains('poster')){ e.preventDefault(); openBox(t.currentSrc||t.src, t.alt||''); return; }
+    if(t===box){ e.preventDefault(); closeBox(); }
   }, true);
-
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){ closeBox(); }
-  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeBox(); } });
 })();
 
 /* fallback: když se obrázek nenačte */
