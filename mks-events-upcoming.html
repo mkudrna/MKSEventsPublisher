@@ -63,11 +63,14 @@ body{
 
 /* pravý sloupec */
 .body{flex:1; min-width:0; display:flex; flex-direction:column;}
+/* META nahoře vpravo */
 .meta{
-  display:flex; align-items:center; gap:10px; padding:10px 0;
-  border-bottom:1px solid var(--divider); justify-content:flex-end; flex-wrap:wrap;
+  display:flex; align-items:center; gap:10px; padding:10px 0 8px 0;
+  border-bottom:1px solid var(--divider);
+  justify-content:flex-end; flex-wrap:wrap;
 }
 .badge{ display:inline-block; background:var(--chip); color:#3d4051; border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600; }
+
 .title{ margin:0; padding:12px 0 6px; font-size:26px; line-height:1.25; font-weight:700; }
 .desc{ color:#2a2d3a; font-size:17px; padding:6px 0 12px; }
 
@@ -96,18 +99,18 @@ body{
   }
 }
 
-/* ====== Barvy kalendářů (unikátní pro každý název) ====== */
-.card[data-calendar*="Buškův hamr"]                     { --bar:#e67e22; } /* oranžová */
-.card[data-calendar*="Centrum komunitních aktivit"]     { --bar:#8e44ad; } /* fialová */
-.card[data-calendar*="Kostel Nanebevzetí Panny Marie"]  { --bar:#2980b9; } /* modrá */
-.card[data-calendar*="Kostel Nejsvětější Trojice"]      { --bar:#16a085; } /* tyrkys */
-.card[data-calendar*="Kulturní a informační centrum"]   { --bar:#d35400; } /* tmavě oranžová */
-.card[data-calendar*="Kulturní dům"]                    { --bar:#c0392b; } /* červená */
-.card[data-calendar*="Letní scéna"]                     { --bar:#27ae60; } /* zelená */
-.card[data-calendar*="Taneční sál"]                     { --bar:#f1c40f; } /* žlutá */
-.card[data-calendar*="Velký rybník"]                    { --bar:#2ecc71; } /* světle zelená */
-.card[data-calendar*="Žižkovo náměstí"]                 { --bar:#34495e; } /* šedomodrá */
-.card[data-calendar*="Trhové Sviny a okolí"]            { --bar:#e84393; } /* růžová */
+/* ====== Barvy kalendářů ====== */
+.card[data-calendar*="Buškův hamr"]                     { --bar:#e67e22; }
+.card[data-calendar*="Centrum komunitních aktivit"]     { --bar:#8e44ad; }
+.card[data-calendar*="Kostel Nanebevzetí Panny Marie"]  { --bar:#2980b9; }
+.card[data-calendar*="Kostel Nejsvětější Trojice"]      { --bar:#16a085; }
+.card[data-calendar*="Kulturní a informační centrum"]   { --bar:#d35400; }
+.card[data-calendar*="Kulturní dům"]                    { --bar:#c0392b; }
+.card[data-calendar*="Letní scéna"]                     { --bar:#27ae60; }
+.card[data-calendar*="Taneční sál"]                     { --bar:#f1c40f; }
+.card[data-calendar*="Velký rybník"]                    { --bar:#2ecc71; }
+.card[data-calendar*="Žižkovo náměstí"]                 { --bar:#34495e; }
+.card[data-calendar*="Trhové Sviny a okolí"]            { --bar:#e84393; }
 
 /* responsive */
 @media (max-width:740px){
@@ -190,7 +193,7 @@ body.lb-open{ overflow:hidden; }
     <article class="card" data-calendar="Centrum komunitních aktivit">
       <div class="media">
          <div class="poster-wrap">
-           <img class="poster" loading="lazy" decoding="async" src="img/20251016-1700-senior-resort-hluboka.jpg" alt="">
+           <img class="poster" loading="lazy" decoding="async" src="/img/20251016-1700-senior-resort-hluboka.jpg" alt="">
          </div>
        </div>
       <div class="body">
@@ -207,7 +210,7 @@ body.lb-open{ overflow:hidden; }
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Senior%20Resort%20Hlubok%C3%A1&amp;dates=20251016T150000Z/20251016T160000Z&amp;details=Ve%20%C4%8Dtvrtek%2016.%2010.%20od%2017%3A00%20se%20uskute%C4%8Dn%C3%AD%20p%C5%99%C3%A1telsk%C3%A9%20setk%C3%A1n%C3%AD%20spojen%C3%A9%20s%20prezentac%C3%AD%20projektu%20Senior%20Resort%20Hlubok%C3%A1.%20P%C5%99ij%C4%8Fte%20se%20dozv%C4%9Bd%C4%9Bt%20v%C3%ADce%20a%20zeptat%20se%20na%20v%C5%A1e%2C%20co%20V%C3%A1s%20zaj%C3%ADm%C3%A1.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AroaWeznT%2FLG1%2FiNKVEjqes%2BF%40mks-events%0D%0ADTSTAMP%3A20251015T170537Z%0D%0ASUMMARY%3ASenior%20Resort%20Hlubok%C3%A1%0D%0ADTSTART%3A20251016T150000Z%0D%0ADTEND%3A20251016T160000Z%0D%0ADESCRIPTION%3AVe%20%C4%8Dtvrtek%2016.%2010.%20od%2017%3A00%20se%20uskute%C4%8Dn%C3%AD%20p%C5%99%C3%A1telsk%C3%A9%20setk%C3%A1n%C3%AD%20spojen%C3%A9%20s%20prezentac%C3%AD%20projektu%20Senior%20Resort%20Hlubok%C3%A1.%20P%C5%99ij%C4%8Fte%20se%20dozv%C4%9Bd%C4%9Bt%20v%C3%ADce%20a%20zeptat%20se%20na%20v%C5%A1e%5C%2C%20co%20V%C3%A1s%20zaj%C3%ADm%C3%A1.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="senior-resort-hluboka.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AroaWeznT%2FLG1%2FiNKVEjqes%2BF%40mks-events%0D%0ADTSTAMP%3A20251015T172108Z%0D%0ASUMMARY%3ASenior%20Resort%20Hlubok%C3%A1%0D%0ADTSTART%3A20251016T150000Z%0D%0ADTEND%3A20251016T160000Z%0D%0ADESCRIPTION%3AVe%20%C4%8Dtvrtek%2016.%2010.%20od%2017%3A00%20se%20uskute%C4%8Dn%C3%AD%20p%C5%99%C3%A1telsk%C3%A9%20setk%C3%A1n%C3%AD%20spojen%C3%A9%20s%20prezentac%C3%AD%20projektu%20Senior%20Resort%20Hlubok%C3%A1.%20P%C5%99ij%C4%8Fte%20se%20dozv%C4%9Bd%C4%9Bt%20v%C3%ADce%20a%20zeptat%20se%20na%20v%C5%A1e%5C%2C%20co%20V%C3%A1s%20zaj%C3%ADm%C3%A1.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="senior-resort-hluboka.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -216,7 +219,7 @@ body.lb-open{ overflow:hidden; }
     <article class="card" data-calendar="Kulturní dům">
       <div class="media">
          <div class="poster-wrap">
-           <img class="poster" loading="lazy" decoding="async" src="img/20251021-1700-literarne-hudebni-vecer.jpg" alt="">
+           <img class="poster" loading="lazy" decoding="async" src="/img/20251021-1700-literarne-hudebni-vecer.jpg" alt="">
          </div>
        </div>
       <div class="body">
@@ -233,7 +236,7 @@ body.lb-open{ overflow:hidden; }
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Liter%C3%A1rn%C4%9B%20-%20hudebn%C3%AD%20ve%C4%8Der&amp;dates=20251021T150000Z/20251021T164000Z&amp;details=&amp;location=Foyer%20Kulturn%C3%ADho%20domu%20Trhov%C3%A9%20Sviny&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AyDH0ZK%2F1sBxPXw3RmrlQ68dU%40mks-events%0D%0ADTSTAMP%3A20251015T170524Z%0D%0ASUMMARY%3ALiter%C3%A1rn%C4%9B%20-%20hudebn%C3%AD%20ve%C4%8Der%0D%0ADTSTART%3A20251021T150000Z%0D%0ADTEND%3A20251021T164000Z%0D%0ALOCATION%3AFoyer%20Kulturn%C3%ADho%20domu%20Trhov%C3%A9%20Sviny%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="literarne-hudebni-vecer.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AyDH0ZK%2F1sBxPXw3RmrlQ68dU%40mks-events%0D%0ADTSTAMP%3A20251015T172106Z%0D%0ASUMMARY%3ALiter%C3%A1rn%C4%9B%20-%20hudebn%C3%AD%20ve%C4%8Der%0D%0ADTSTART%3A20251021T150000Z%0D%0ADTEND%3A20251021T164000Z%0D%0ALOCATION%3AFoyer%20Kulturn%C3%ADho%20domu%20Trhov%C3%A9%20Sviny%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="literarne-hudebni-vecer.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -242,7 +245,7 @@ body.lb-open{ overflow:hidden; }
     <article class="card" data-calendar="Kostel Nanebevzetí Panny Marie">
       <div class="media">
          <div class="poster-wrap">
-           <img class="poster" loading="lazy" decoding="async" src="img/20251101-1900-rozsveceni-stareho-hrbitova.jpg" alt="">
+           <img class="poster" loading="lazy" decoding="async" src="/img/20251101-1900-rozsveceni-stareho-hrbitova.jpg" alt="">
          </div>
        </div>
       <div class="body">
@@ -259,7 +262,7 @@ body.lb-open{ overflow:hidden; }
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Rozsv%C4%9Bcen%C3%AD%20star%C3%A9ho%20h%C5%99bitova&amp;dates=20251101T180000Z/20251101T193000Z&amp;details=Po%20roce%20op%C4%9Bt%20zap%C3%A1l%C3%ADme%20sv%C3%AD%C4%8Dky%20na%20m%C3%ADst%C4%9B%20zru%C5%A1en%C3%A9ho%20h%C5%99bitova.&amp;location=Park%20za%20kostelem%20Nanebevzet%C3%AD%20Panny%20Marie&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ATzCNOY1kVfGh7GQRWHTgPmNg%40mks-events%0D%0ADTSTAMP%3A20251015T170519Z%0D%0ASUMMARY%3ARozsv%C4%9Bcen%C3%AD%20star%C3%A9ho%20h%C5%99bitova%0D%0ADTSTART%3A20251101T180000Z%0D%0ADTEND%3A20251101T193000Z%0D%0ALOCATION%3APark%20za%20kostelem%20Nanebevzet%C3%AD%20Panny%20Marie%0D%0ADESCRIPTION%3APo%20roce%20op%C4%9Bt%20zap%C3%A1l%C3%ADme%20sv%C3%AD%C4%8Dky%20na%20m%C3%ADst%C4%9B%20zru%C5%A1en%C3%A9ho%20h%C5%99bitova.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="rozsveceni-stareho-hrbitova.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ATzCNOY1kVfGh7GQRWHTgPmNg%40mks-events%0D%0ADTSTAMP%3A20251015T172105Z%0D%0ASUMMARY%3ARozsv%C4%9Bcen%C3%AD%20star%C3%A9ho%20h%C5%99bitova%0D%0ADTSTART%3A20251101T180000Z%0D%0ADTEND%3A20251101T193000Z%0D%0ALOCATION%3APark%20za%20kostelem%20Nanebevzet%C3%AD%20Panny%20Marie%0D%0ADESCRIPTION%3APo%20roce%20op%C4%9Bt%20zap%C3%A1l%C3%ADme%20sv%C3%AD%C4%8Dky%20na%20m%C3%ADst%C4%9B%20zru%C5%A1en%C3%A9ho%20h%C5%99bitova.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="rozsveceni-stareho-hrbitova.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -268,7 +271,7 @@ body.lb-open{ overflow:hidden; }
     <article class="card" data-calendar="Kulturní dům">
       <div class="media">
          <div class="poster-wrap">
-           <img class="poster" loading="lazy" decoding="async" src="img/20251108-1500-krest-knihy-svinensky-ulicnik.jpg" alt="">
+           <img class="poster" loading="lazy" decoding="async" src="/img/20251108-1500-krest-knihy-svinensky-ulicnik.jpg" alt="">
          </div>
        </div>
       <div class="body">
@@ -285,7 +288,7 @@ body.lb-open{ overflow:hidden; }
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=K%C5%99est%20knihy%20SVINENSK%C3%9D%20ULI%C4%8CN%C3%8DK&amp;dates=20251108T140000Z/20251108T153000Z&amp;details=K%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%2C%20jak%20se%20m%C4%9Bnily%20a%20vyv%C3%ADjeli%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.&amp;location=Kinos%C3%A1l%20KD&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2BMH6XL%2FX8NdKYH35Tf9xgQyG%40mks-events%0D%0ADTSTAMP%3A20251015T170529Z%0D%0ASUMMARY%3AK%C5%99est%20knihy%20SVINENSK%C3%9D%20ULI%C4%8CN%C3%8DK%0D%0ADTSTART%3A20251108T140000Z%0D%0ADTEND%3A20251108T153000Z%0D%0ALOCATION%3AKinos%C3%A1l%20KD%0D%0ADESCRIPTION%3AK%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%5C%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%5C%2C%20jak%20se%20m%C4%9Bnily%20a%20vyv%C3%ADjeli%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="krest-knihy-svinensky-ulicnik.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2BMH6XL%2FX8NdKYH35Tf9xgQyG%40mks-events%0D%0ADTSTAMP%3A20251015T172107Z%0D%0ASUMMARY%3AK%C5%99est%20knihy%20SVINENSK%C3%9D%20ULI%C4%8CN%C3%8DK%0D%0ADTSTART%3A20251108T140000Z%0D%0ADTEND%3A20251108T153000Z%0D%0ALOCATION%3AKinos%C3%A1l%20KD%0D%0ADESCRIPTION%3AK%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%5C%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%5C%2C%20jak%20se%20m%C4%9Bnily%20a%20vyv%C3%ADjeli%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="krest-knihy-svinensky-ulicnik.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -294,7 +297,7 @@ body.lb-open{ overflow:hidden; }
     <article class="card" data-calendar="Kulturní a informační centrum">
       <div class="media">
          <div class="poster-wrap">
-           <img class="poster" loading="lazy" decoding="async" src="img/20251114-1800-autorske-cteni-david-jan-zak.jpg" alt="">
+           <img class="poster" loading="lazy" decoding="async" src="/img/20251114-1800-autorske-cteni-david-jan-zak.jpg" alt="">
          </div>
        </div>
       <div class="body">
@@ -311,7 +314,7 @@ body.lb-open{ overflow:hidden; }
       <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Autorsk%C3%A9%20%C4%8Dten%C3%AD%20-%20David%20Jan%20%C5%BD%C3%A1k&amp;dates=20251114T170000Z/20251114T183000Z&amp;details=Autor%20p%C5%99edstav%C3%AD%20svou%20novou%20knihu%20%E2%80%9C%20Sudety%3A%20Ztracen%C3%BD%20r%C3%A1j%E2%80%9C%20-%20%20p%C5%99edv%C3%A1le%C4%8Dn%C3%A9%20pohrani%C4%8D%C3%AD%2C%20kde%20se%20prol%C3%ADnaly%20osudy%20%C4%8Cech%C5%AF%2C%20N%C4%9Bmc%C5%AF%2C%20%C5%BDid%C5%AF%20a%20dal%C5%A1%C3%ADch%20n%C3%A1rodnost%C3%AD.%20Pono%C5%99te%20se%20do%20autentick%C3%BDch%20pov%C3%ADdek%2C%20kter%C3%A9%20zachycuj%C3%AD%20radosti%20i%20bolesti%20%C5%BEivota%20v%20dob%C4%9B%2C%20kter%C3%A1%20nav%C5%BEdy%20zm%C4%9Bnila%20tv%C3%A1%C5%99%20tohoto%20regionu.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
         <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
       </a>
-      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AZUaC4MzJjToUKn8iZy1TqA9D%40mks-events%0D%0ADTSTAMP%3A20251015T170533Z%0D%0ASUMMARY%3AAutorsk%C3%A9%20%C4%8Dten%C3%AD%20-%20David%20Jan%20%C5%BD%C3%A1k%0D%0ADTSTART%3A20251114T170000Z%0D%0ADTEND%3A20251114T183000Z%0D%0ADESCRIPTION%3AAutor%20p%C5%99edstav%C3%AD%20svou%20novou%20knihu%20%E2%80%9C%20Sudety%3A%20Ztracen%C3%BD%20r%C3%A1j%E2%80%9C%20-%20%20p%C5%99edv%C3%A1le%C4%8Dn%C3%A9%20pohrani%C4%8D%C3%AD%5C%2C%20kde%20se%20prol%C3%ADnaly%20osudy%20%C4%8Cech%C5%AF%5C%2C%20N%C4%9Bmc%C5%AF%5C%2C%20%C5%BDid%C5%AF%20a%20dal%C5%A1%C3%ADch%20n%C3%A1rodnost%C3%AD.%20Pono%C5%99te%20se%20do%20autentick%C3%BDch%20pov%C3%ADdek%5C%2C%20kter%C3%A9%20zachycuj%C3%AD%20radosti%20i%20bolesti%20%C5%BEivota%20v%20dob%C4%9B%5C%2C%20kter%C3%A1%20nav%C5%BEdy%20zm%C4%9Bnila%20tv%C3%A1%C5%99%20tohoto%20regionu.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="autorske-cteni-david-jan-zak.ics" title="Přidat do Apple kalendáře">
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AZUaC4MzJjToUKn8iZy1TqA9D%40mks-events%0D%0ADTSTAMP%3A20251015T172107Z%0D%0ASUMMARY%3AAutorsk%C3%A9%20%C4%8Dten%C3%AD%20-%20David%20Jan%20%C5%BD%C3%A1k%0D%0ADTSTART%3A20251114T170000Z%0D%0ADTEND%3A20251114T183000Z%0D%0ADESCRIPTION%3AAutor%20p%C5%99edstav%C3%AD%20svou%20novou%20knihu%20%E2%80%9C%20Sudety%3A%20Ztracen%C3%BD%20r%C3%A1j%E2%80%9C%20-%20%20p%C5%99edv%C3%A1le%C4%8Dn%C3%A9%20pohrani%C4%8D%C3%AD%5C%2C%20kde%20se%20prol%C3%ADnaly%20osudy%20%C4%8Cech%C5%AF%5C%2C%20N%C4%9Bmc%C5%AF%5C%2C%20%C5%BDid%C5%AF%20a%20dal%C5%A1%C3%ADch%20n%C3%A1rodnost%C3%AD.%20Pono%C5%99te%20se%20do%20autentick%C3%BDch%20pov%C3%ADdek%5C%2C%20kter%C3%A9%20zachycuj%C3%AD%20radosti%20i%20bolesti%20%C5%BEivota%20v%20dob%C4%9B%5C%2C%20kter%C3%A1%20nav%C5%BEdy%20zm%C4%9Bnila%20tv%C3%A1%C5%99%20tohoto%20regionu.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="autorske-cteni-david-jan-zak.ics" title="Přidat do Apple kalendáře">
         <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
       </a>
     </div>
@@ -330,11 +333,16 @@ function h(s){return String(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;',
 function ha(s){return h(s).replace(/"/g,'&quot;')}
 function slugify(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'akce'}
 
-/* karta */
+/* karta (stejná struktura jako na serveru) */
 function renderCardHTML(d){
-  var media = d.image
-    ? '<div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="'+ha(d.image)+'" alt=""></div></div>'
+  var img = '';
+  if (d.image) {
+    img = /^https?:\/\//i.test(d.image) ? d.image : (d.image[0] === '/' ? d.image : ('/' + d.image));
+  }
+  var media = img
+    ? '<div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="'+ha(img)+'" alt=""></div></div>'
     : '';
+
   var meta = '<div class="meta">'+
                (d.location ? '<span class="badge badge--location">📍 '+h(d.location)+'</span>' : '')+
                '<span class="badge">📅 '+h(d.dateBadge)+'</span>'+
@@ -358,19 +366,15 @@ function renderCardHTML(d){
          '</article>';
 }
 
-/* iFrame resize (kvůli embedu nevadí ani na samostatné stránce) */
-function postHeight(){
-  var h=document.documentElement.scrollHeight || document.body.scrollHeight || 0;
-  if (parent && parent.postMessage) parent.postMessage({type:'resize-iframe',height:h},'*');
-}
+/* iFrame resize (embed) */
+function postHeight(){var h=document.documentElement.scrollHeight||document.body.scrollHeight||0; if(parent&&parent.postMessage) parent.postMessage({type:'resize-iframe',height:h},'*');}
 function sendHeight(){ postHeight(); }
 window.addEventListener('load', sendHeight);
 window.addEventListener('resize', sendHeight);
 document.addEventListener('load', sendHeight, true);
-try{ var mo=new MutationObserver(function(){ sendHeight(); }); mo.observe(document.documentElement, {childList:true,subtree:true,attributes:true,characterData:true}); }catch(_){}
+try{ var mo=new MutationObserver(function(){ sendHeight(); }); mo.observe(document.documentElement,{childList:true,subtree:true,attributes:true,characterData:true}); }catch(_){}
 try{ var ro=new ResizeObserver(function(){ sendHeight(); }); ro.observe(document.body); }catch(_){}
-setTimeout(sendHeight,300);
-setTimeout(sendHeight,1200);
+setTimeout(sendHeight,300); setTimeout(sendHeight,1200);
 
 /* Lightbox */
 (function(){
