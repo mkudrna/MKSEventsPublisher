@@ -11,403 +11,640 @@
   --bg:#ffffff;
   --card:#fff; --text:#202225; --muted:#555; --chip:#f5f6fa; --divider:#e8e8ee;
   --rail:56px;
-
   --panel-radius:16px;
   --panel-shadow:0 10px 40px rgba(0,0,0,.08);
   --panel-border:1px solid #eee;
 }
 *{box-sizing:border-box}
 html,body{ height:auto; }
-body{
-  margin:0; padding:16px; background:var(--bg); color:var(--text);
-  font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu
-}
-
-/* Panel */
-.mks-wrapper{ max-width:980px; margin:24px auto; background:#fff; border-radius:var(--panel-radius);
-  box-shadow:var(--panel-shadow); border:var(--panel-border); padding:16px; }
-.mks-grid{ display:grid; gap:16px; grid-template-columns:1fr }
+body{ margin:0; padding:16px; background:var(--bg); color:var(--text); font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu }
+.wrapper{ max-width:980px; margin:24px auto; background:#fff; border-radius:var(--panel-radius); box-shadow:var(--panel-shadow); border:var(--panel-border); padding:16px; }
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
 
 /* karta + kolejnice */
-.mks-card{
-  position:relative; display:flex; gap:18px; align-items:stretch;
-  background:var(--card); border-radius:16px; padding:18px;
-  padding-left:calc(18px + var(--rail));
-  box-shadow:0 6px 24px rgba(0,0,0,.06);
-  transition: transform .15s ease, box-shadow .2s ease;
-}
-.mks-card::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:var(--rail);
-  background:var(--bar,#f4a261); border-radius:16px 0 0 16px; }
-.mks-card::after{ content:attr(data-calendar); position:absolute; left:0; top:0; bottom:0; width:var(--rail);
-  display:flex; align-items:center; justify-content:center; writing-mode:vertical-rl; text-orientation:mixed;
-  color:#fff; font-weight:700; letter-spacing:.3px; padding:8px 0; text-align:center; overflow:hidden; opacity:.95; }
-.mks-card:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.12); }
+.card{ position:relative; display:flex; gap:18px; align-items:stretch; background:var(--card); border-radius:16px; padding:18px; padding-left:calc(18px + var(--rail)); box-shadow:0 6px 24px rgba(0,0,0,.06); transition: transform .15s ease, box-shadow .2s ease; }
+.card::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:var(--rail); background:var(--bar,#f4a261); border-radius:16px 0 0 16px; }
+.card::after{ content:attr(data-calendar); position:absolute; left:0; top:0; bottom:0; width:var(--rail); display:flex; align-items:center; justify-content:center; writing-mode:vertical-rl; text-orientation:mixed; color:#fff; font-weight:700; letter-spacing:.3px; padding:8px 0; text-align:center; overflow:hidden; opacity:.95; }
+.card:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.12); }
 
 /* plakát */
-.mks-media{ flex:0 0 340px; max-width:340px; align-self:flex-start; }
-.mks-poster-wrap{ background:#fff; border-radius:12px; overflow:hidden; border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 4px 12px rgba(0,0,0,.06); cursor: zoom-in; }
-.mks-poster{ display:block; width:100%; height:auto; max-height:640px; transition:.3s transform,.3s filter; }
-.mks-card:hover .mks-poster{ transform:scale(1.03); filter:brightness(1.05); }
+.media{ flex:0 0 340px; max-width:340px; align-self:flex-start; }
+.poster-wrap{ background:#fff; border-radius:12px; overflow:hidden; border:1px solid rgba(0,0,0,.06); box-shadow:0 4px 12px rgba(0,0,0,.06); cursor: zoom-in; }
+.poster{ display:block; width:100%; height:auto; max-height:640px; transition:.3s transform,.3s filter; }
+.card:hover .poster{ transform:scale(1.03); filter:brightness(1.05); }
 
 /* pravý sloupec */
-.mks-body{ flex:1; min-width:0; display:flex; flex-direction:column; }
-
-/* META nahoře vpravo (badge) */
-.mks-meta{
-  display:flex; align-items:center; gap:10px; padding:10px 0 8px 0;
-  border-bottom:1px solid var(--divider);
-  justify-content:flex-end; flex-wrap:wrap;
-}
-.mks-badge{
-  display:inline-block; background:var(--chip); color:#3d4051;
-  border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600;
-}
-
-/* Nadpis a popis */
-.mks-title{ margin:0; padding:12px 0 6px; font-size:26px; line-height:1.25; font-weight:700; }
-.mks-desc{ color:#2a2d3a; font-size:17px; padding:6px 0 12px; }
+.body{flex:1; min-width:0; display:flex; flex-direction:column;}
+.meta{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--divider); justify-content:flex-end; flex-wrap:wrap; }
+.badge{ display:inline-block; background:var(--chip); color:#3d4051; border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600; }
+.title{ margin:0; padding:12px 0 6px; font-size:26px; line-height:1.25; font-weight:700; }
+.desc{ color:#2a2d3a; font-size:17px; padding:6px 0 12px; }
 
 /* tlačítka */
-.mks-actions{ margin-top:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%; border-top:1px solid var(--divider); padding-top:12px; container-type:inline-size; }
-.mks-btn{ display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(0,0,0,.1); background:#fff; padding:8px 12px; border-radius:10px; font-weight:600; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,.04); cursor:pointer; color:#1a1f36; text-decoration:none; }
-.mks-btn:hover,.mks-btn:focus{ text-decoration:none }
-.mks-ico{ font-size:16px; line-height:1 }
-.mks-label{ display:inline }
+.actions{ margin-top:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%; border-top:1px solid var(--divider); padding-top:12px; container-type:inline-size; }
+.btn{ display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(0,0,0,.1); background:#fff; padding:8px 12px; border-radius:10px; font-weight:600; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,.04); cursor:pointer; color:#1a1f36; text-decoration:none; }
+.btn:hover,.btn:focus{ text-decoration:none }
+.btn .ico{ font-size:16px; line-height:1 }
+.btn .label{ display:inline }
+@supports (container-type: inline-size) { @container (max-width: 440px) { .actions{ gap:12px } .actions .btn{ padding:10px; width:44px; height:44px; border-radius:12px } .actions .btn .label{ display:none } .actions .btn .ico{ font-size:20px } } }
+@supports not (container-type: inline-size) { @media (max-width: 520px){ .actions{ gap:12px } .actions .btn{ padding:10px; width:44px; height:44px; border-radius:12px } .actions .btn .label{ display:none } .actions .btn .ico{ font-size:20px } } }
 
-/* Compact tlačítka */
-@supports (container-type: inline-size) {
-  @container (max-width: 440px) {
-    .mks-actions{ gap:12px }
-    .mks-actions .mks-btn{ padding:10px; width:44px; height:44px; border-radius:12px }
-    .mks-actions .mks-label{ display:none }
-    .mks-actions .mks-ico{ font-size:20px }
-  }
-}
-@supports not (container-type: inline-size) {
-  @media (max-width: 520px){
-    .mks-actions{ gap:12px }
-    .mks-actions .mks-btn{ padding:10px; width:44px; height:44px; border-radius:12px }
-    .mks-actions .mks-label{ display:none }
-    .mks-actions .mks-ico{ font-size:20px }
-  }
-}
-
-/* Barvy kolejnice podle názvu kalendáře */
-.mks-card[data-calendar*="Buškův hamr"]                    { --bar:#e67e22; }
-.mks-card[data-calendar*="Centrum komunitních aktivit"]    { --bar:#8e44ad; }
-.mks-card[data-calendar*="Kostel Nanebevzetí Panny Marie"] { --bar:#2980b9; }
-.mks-card[data-calendar*="Kostel Nejsvětější Trojice"]     { --bar:#16a085; }
-.mks-card[data-calendar*="Kulturní a informační centrum"]  { --bar:#d35400; }
-.mks-card[data-calendar*="Kulturní dům"]                   { --bar:#c0392b; }
-.mks-card[data-calendar*="Letní scéna"]                    { --bar:#27ae60; }
-.mks-card[data-calendar*="Taneční sál"]                    { --bar:#f1c40f; }
-.mks-card[data-calendar*="Velký rybník"]                   { --bar:#2ecc71; }
-.mks-card[data-calendar*="Žižkovo náměstí"]                { --bar:#34495e; }
-.mks-card[data-calendar*="Trhové Sviny a okolí"]           { --bar:#e84393; }
+/* ====== Barvy kalendářů (unikátní pro každý název) ====== */
+.card[data-calendar*="Buškův hamr"]                    { --bar:#e67e22; }
+.card[data-calendar*="Centrum komunitních aktivit"]    { --bar:#8e44ad; }
+.card[data-calendar*="Kostel Nanebevzetí Panny Marie"] { --bar:#2980b9; }
+.card[data-calendar*="Kostel Nejsvětější Trojice"]     { --bar:#16a085; }
+.card[data-calendar*="Kulturní a informační centrum"]  { --bar:#d35400; }
+.card[data-calendar*="Kulturní dům"]                   { --bar:#c0392b; }
+.card[data-calendar*="Letní scéna"]                    { --bar:#27ae60; }
+.card[data-calendar*="Taneční sál"]                    { --bar:#f1c40f; }
+.card[data-calendar*="Velký rybník"]                   { --bar:#2ecc71; }
+.card[data-calendar*="Žižkovo náměstí"]                { --bar:#34495e; }
+.card[data-calendar*="Trhové Sviny a okolí"]           { --bar:#e84393; }
 
 /* responsive */
-@media (max-width:740px){
-  .mks-card{ flex-direction:column; --rail:42px; }
-  .mks-card::after{ font-size:12px; }
-  .mks-media{ flex:unset; max-width:100% }
-}
+@media (max-width:740px){ .card{ flex-direction:column; --rail:42px; } .card::after{ font-size:12px; } .media{ flex:unset; max-width:100% } }
 
-/* Odkazy */
+/* odkazy */
 a{ color:#0b69d7; text-decoration:none }
 a:hover{ text-decoration:underline }
-.mks-actions .mks-btn, .mks-actions .mks-btn:hover, .mks-actions .mks-btn:focus{ text-decoration:none }
+.actions .btn, .actions .btn:hover, .actions .btn:focus{ text-decoration:none }
 
 /* LIGHTBOX */
-.mks-lightbox{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:2rem; background:rgba(0,0,0,.72); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:9999; }
-.mks-lightbox.open{ opacity:1; pointer-events:auto; }
-.mks-lightbox img{ max-width:min(96vw,1600px); max-height:90vh; width:auto; height:auto; border-radius:12px; box-shadow:0 10px 50px rgba(0,0,0,.5); }
-body.mks-lb-open{ overflow:hidden; }
+.lightbox{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:2rem; background:rgba(0,0,0,.72); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:9999; }
+.lightbox.open{ opacity:1; pointer-events:auto; }
+.lightbox img{ max-width:min(96vw,1600px); max-height:90vh; width:auto; height:auto; border-radius:12px; box-shadow:0 10px 50px rgba(0,0,0,.5); }
+body.lb-open{ overflow:hidden; }
 </style>
-<script type="application/ld+json">
-[
-{
+<script type="application/ld+json">\n[\n{
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Senior Resort Hluboká",
-  "startDate": "2025-10-16T17:00:00+02:00",
-  "endDate": "2025-10-16T18:00:00+02:00",
-  "description": "Ve čtvrtek 16. 10. od 17:00 se uskuteční přátelské setkání spojené s prezentací projektu Senior Resort Hluboká. Přijďte se dozvědět více a zeptat se na vše, co Vás zajímá."
+  "name": "",
+  "startDate": "",
+  "description": ""
 }
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Literárně - hudební večer",
-  "startDate": "2025-10-21T17:00:00+02:00",
-  "endDate": "2025-10-21T18:40:00+02:00",
-  "description": "",
-  "location": {
-    "@type": "Place",
-    "name": "Foyer Kulturního domu Trhové Sviny"
-  }
+  "name": "",
+  "startDate": "",
+  "description": ""
 }
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Rozsvěcení starého hřbitova",
-  "startDate": "2025-11-01T19:00:00+01:00",
-  "endDate": "2025-11-01T20:30:00+01:00",
-  "description": "Po roce opět zapálíme svíčky na místě zrušeného hřbitova.",
-  "location": {
-    "@type": "Place",
-    "name": "Park za kostelem Nanebevzetí Panny Marie"
-  }
+  "name": "",
+  "startDate": "",
+  "description": ""
 }
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Křest knihy SVINENSKÝ ULIČNÍK",
-  "startDate": "2025-11-08T15:00:00+01:00",
-  "endDate": "2025-11-08T16:30:00+01:00",
-  "description": "Křest knihy mladého autora - svinenského kronikáře Matěje Průky, který nám na jejích stránkách odtajní, jak se měnily a vyvíjeli názvy ulic v Trhových Svinech a nejen to.",
-  "location": {
-    "@type": "Place",
-    "name": "Kinosál KD"
-  }
+  "name": "",
+  "startDate": "",
+  "description": ""
 }
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Autorské čtení - David Jan Žák",
-  "startDate": "2025-11-14T18:00:00+01:00",
-  "endDate": "2025-11-14T19:30:00+01:00",
-  "description": "Autor představí svou novou knihu “ Sudety: Ztracený ráj“ -  předválečné pohraničí, kde se prolínaly osudy Čechů, Němců, Židů a dalších národností. Ponořte se do autentických povídek, které zachycují radosti i bolesti života v době, která navždy změnila tvář tohoto regionu."
+  "name": "",
+  "startDate": "",
+  "description": ""
 }
-]
-</script>
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "",
+  "startDate": "",
+  "description": ""
+}\n]\n</script>
 </head>
 <body>
-  <div class="mks-wrapper">
-    <div class="mks-grid" id="mks-grid">
-    <article class="mks-card" data-calendar="Centrum komunitních aktivit">
-      <div class="mks-media">
-         <div class="mks-poster-wrap">
-           <img class="mks-poster" loading="lazy" decoding="async" src="/img/20251016-1700-senior-resort-hluboka.jpg" alt="">
-         </div>
-       </div>
-      <div class="mks-body">
-        
-    <div class="mks-meta">
+  <div class="wrapper">
+    <div class="grid" id="grid">
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
       
-      <span class="mks-badge">📅 </span>
+    <div class="meta">
       
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
     </div>
-        <h2 class="mks-title">Senior Resort Hluboká</h2>
-        <div class="mks-desc">Ve čtvrtek 16. 10. od 17:00 se uskuteční přátelské setkání spojené s prezentací projektu Senior Resort Hluboká. Přijďte se dozvědět více a zeptat se na vše, co Vás zajímá.</div>
-        
-    <div class="mks-actions">
-      <a class="mks-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Senior%20Resort%20Hlubok%C3%A1&amp;dates=20251016T150000Z/20251016T160000Z&amp;details=Ve%20%C4%8Dtvrtek%2016.%2010.%20od%2017%3A00%20se%20uskute%C4%8Dn%C3%AD%20p%C5%99%C3%A1telsk%C3%A9%20setk%C3%A1n%C3%AD%20spojen%C3%A9%20s%20prezentac%C3%AD%20projektu%20Senior%20Resort%20Hlubok%C3%A1.%20P%C5%99ij%C4%8Fte%20se%20dozv%C4%9Bd%C4%9Bt%20v%C3%ADce%20a%20zeptat%20se%20na%20v%C5%A1e%2C%20co%20V%C3%A1s%20zaj%C3%ADm%C3%A1.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
-        <span class="mks-ico">🗓️</span><span class="mks-label">Přidat do Google kalendáře</span>
-      </a>
-      <a class="mks-btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AroaWeznT%2FLG1%2FiNKVEjqes%2BF%40mks-events%0D%0ADTSTAMP%3A20251015T173145Z%0D%0ASUMMARY%3ASenior%20Resort%20Hlubok%C3%A1%0D%0ADTSTART%3A20251016T150000Z%0D%0ADTEND%3A20251016T160000Z%0D%0ADESCRIPTION%3AVe%20%C4%8Dtvrtek%2016.%2010.%20od%2017%3A00%20se%20uskute%C4%8Dn%C3%AD%20p%C5%99%C3%A1telsk%C3%A9%20setk%C3%A1n%C3%AD%20spojen%C3%A9%20s%20prezentac%C3%AD%20projektu%20Senior%20Resort%20Hlubok%C3%A1.%20P%C5%99ij%C4%8Fte%20se%20dozv%C4%9Bd%C4%9Bt%20v%C3%ADce%20a%20zeptat%20se%20na%20v%C5%A1e%5C%2C%20co%20V%C3%A1s%20zaj%C3%ADm%C3%A1.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="senior-resort-hluboka.ics" title="Přidat do Apple kalendáře">
-        <span class="mks-ico">🍎</span><span class="mks-label">Přidat do Apple kalendáře</span>
-      </a>
-    </div>
-      </div>
-    </article>
-    <article class="mks-card" data-calendar="Kulturní dům">
-      <div class="mks-media">
-         <div class="mks-poster-wrap">
-           <img class="mks-poster" loading="lazy" decoding="async" src="/img/20251021-1700-literarne-hudebni-vecer.jpg" alt="">
-         </div>
-       </div>
-      <div class="mks-body">
-        
-    <div class="mks-meta">
-      <span class="mks-badge mks-badge--location">📍 Foyer Kulturního domu Trhové Sviny</span>
-      <span class="mks-badge">📅 </span>
+      <h2 class="title"></h2>
       
-    </div>
-        <h2 class="mks-title">Literárně - hudební večer</h2>
-        
-        
-    <div class="mks-actions">
-      <a class="mks-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Liter%C3%A1rn%C4%9B%20-%20hudebn%C3%AD%20ve%C4%8Der&amp;dates=20251021T150000Z/20251021T164000Z&amp;details=&amp;location=Foyer%20Kulturn%C3%ADho%20domu%20Trhov%C3%A9%20Sviny&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
-        <span class="mks-ico">🗓️</span><span class="mks-label">Přidat do Google kalendáře</span>
-      </a>
-      <a class="mks-btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AyDH0ZK%2F1sBxPXw3RmrlQ68dU%40mks-events%0D%0ADTSTAMP%3A20251015T173143Z%0D%0ASUMMARY%3ALiter%C3%A1rn%C4%9B%20-%20hudebn%C3%AD%20ve%C4%8Der%0D%0ADTSTART%3A20251021T150000Z%0D%0ADTEND%3A20251021T164000Z%0D%0ALOCATION%3AFoyer%20Kulturn%C3%ADho%20domu%20Trhov%C3%A9%20Sviny%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="literarne-hudebni-vecer.ics" title="Přidat do Apple kalendáře">
-        <span class="mks-ico">🍎</span><span class="mks-label">Přidat do Apple kalendáře</span>
-      </a>
-    </div>
-      </div>
-    </article>
-    <article class="mks-card" data-calendar="Kostel Nanebevzetí Panny Marie">
-      <div class="mks-media">
-         <div class="mks-poster-wrap">
-           <img class="mks-poster" loading="lazy" decoding="async" src="/img/20251101-1900-rozsveceni-stareho-hrbitova.jpg" alt="">
-         </div>
-       </div>
-      <div class="mks-body">
-        
-    <div class="mks-meta">
-      <span class="mks-badge mks-badge--location">📍 Park za kostelem Nanebevzetí Panny Marie</span>
-      <span class="mks-badge">📅 </span>
       
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A29a2cee9-f01f-4700-9a2f-5cb2d1fd4c39%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
     </div>
-        <h2 class="mks-title">Rozsvěcení starého hřbitova</h2>
-        <div class="mks-desc">Po roce opět zapálíme svíčky na místě zrušeného hřbitova.</div>
-        
-    <div class="mks-actions">
-      <a class="mks-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Rozsv%C4%9Bcen%C3%AD%20star%C3%A9ho%20h%C5%99bitova&amp;dates=20251101T180000Z/20251101T193000Z&amp;details=Po%20roce%20op%C4%9Bt%20zap%C3%A1l%C3%ADme%20sv%C3%AD%C4%8Dky%20na%20m%C3%ADst%C4%9B%20zru%C5%A1en%C3%A9ho%20h%C5%99bitova.&amp;location=Park%20za%20kostelem%20Nanebevzet%C3%AD%20Panny%20Marie&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
-        <span class="mks-ico">🗓️</span><span class="mks-label">Přidat do Google kalendáře</span>
-      </a>
-      <a class="mks-btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ATzCNOY1kVfGh7GQRWHTgPmNg%40mks-events%0D%0ADTSTAMP%3A20251015T173143Z%0D%0ASUMMARY%3ARozsv%C4%9Bcen%C3%AD%20star%C3%A9ho%20h%C5%99bitova%0D%0ADTSTART%3A20251101T180000Z%0D%0ADTEND%3A20251101T193000Z%0D%0ALOCATION%3APark%20za%20kostelem%20Nanebevzet%C3%AD%20Panny%20Marie%0D%0ADESCRIPTION%3APo%20roce%20op%C4%9Bt%20zap%C3%A1l%C3%ADme%20sv%C3%AD%C4%8Dky%20na%20m%C3%ADst%C4%9B%20zru%C5%A1en%C3%A9ho%20h%C5%99bitova.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="rozsveceni-stareho-hrbitova.ics" title="Přidat do Apple kalendáře">
-        <span class="mks-ico">🍎</span><span class="mks-label">Přidat do Apple kalendáře</span>
-      </a>
     </div>
-      </div>
-    </article>
-    <article class="mks-card" data-calendar="Kulturní dům">
-      <div class="mks-media">
-         <div class="mks-poster-wrap">
-           <img class="mks-poster" loading="lazy" decoding="async" src="/img/20251108-1500-krest-knihy-svinensky-ulicnik.jpg" alt="">
-         </div>
-       </div>
-      <div class="mks-body">
-        
-    <div class="mks-meta">
-      <span class="mks-badge mks-badge--location">📍 Kinosál KD</span>
-      <span class="mks-badge">📅 </span>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
       
-    </div>
-        <h2 class="mks-title">Křest knihy SVINENSKÝ ULIČNÍK</h2>
-        <div class="mks-desc">Křest knihy mladého autora - svinenského kronikáře Matěje Průky, který nám na jejích stránkách odtajní, jak se měnily a vyvíjeli názvy ulic v Trhových Svinech a nejen to.</div>
-        
-    <div class="mks-actions">
-      <a class="mks-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=K%C5%99est%20knihy%20SVINENSK%C3%9D%20ULI%C4%8CN%C3%8DK&amp;dates=20251108T140000Z/20251108T153000Z&amp;details=K%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%2C%20jak%20se%20m%C4%9Bnily%20a%20vyv%C3%ADjeli%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.&amp;location=Kinos%C3%A1l%20KD&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
-        <span class="mks-ico">🗓️</span><span class="mks-label">Přidat do Google kalendáře</span>
-      </a>
-      <a class="mks-btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2BMH6XL%2FX8NdKYH35Tf9xgQyG%40mks-events%0D%0ADTSTAMP%3A20251015T173144Z%0D%0ASUMMARY%3AK%C5%99est%20knihy%20SVINENSK%C3%9D%20ULI%C4%8CN%C3%8DK%0D%0ADTSTART%3A20251108T140000Z%0D%0ADTEND%3A20251108T153000Z%0D%0ALOCATION%3AKinos%C3%A1l%20KD%0D%0ADESCRIPTION%3AK%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%5C%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%5C%2C%20jak%20se%20m%C4%9Bnily%20a%20vyv%C3%ADjeli%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="krest-knihy-svinensky-ulicnik.ics" title="Přidat do Apple kalendáře">
-        <span class="mks-ico">🍎</span><span class="mks-label">Přidat do Apple kalendáře</span>
-      </a>
-    </div>
-      </div>
-    </article>
-    <article class="mks-card" data-calendar="Kulturní a informační centrum">
-      <div class="mks-media">
-         <div class="mks-poster-wrap">
-           <img class="mks-poster" loading="lazy" decoding="async" src="/img/20251114-1800-autorske-cteni-david-jan-zak.jpg" alt="">
-         </div>
-       </div>
-      <div class="mks-body">
-        
-    <div class="mks-meta">
+    <div class="meta">
       
-      <span class="mks-badge">📅 </span>
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
       
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A84e690bc-7e54-44e5-8dfe-25760bdf4e4f%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
     </div>
-        <h2 class="mks-title">Autorské čtení - David Jan Žák</h2>
-        <div class="mks-desc">Autor představí svou novou knihu “ Sudety: Ztracený ráj“ -  předválečné pohraničí, kde se prolínaly osudy Čechů, Němců, Židů a dalších národností. Ponořte se do autentických povídek, které zachycují radosti i bolesti života v době, která navždy změnila tvář tohoto regionu.</div>
-        
-    <div class="mks-actions">
-      <a class="mks-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Autorsk%C3%A9%20%C4%8Dten%C3%AD%20-%20David%20Jan%20%C5%BD%C3%A1k&amp;dates=20251114T170000Z/20251114T183000Z&amp;details=Autor%20p%C5%99edstav%C3%AD%20svou%20novou%20knihu%20%E2%80%9C%20Sudety%3A%20Ztracen%C3%BD%20r%C3%A1j%E2%80%9C%20-%20%20p%C5%99edv%C3%A1le%C4%8Dn%C3%A9%20pohrani%C4%8D%C3%AD%2C%20kde%20se%20prol%C3%ADnaly%20osudy%20%C4%8Cech%C5%AF%2C%20N%C4%9Bmc%C5%AF%2C%20%C5%BDid%C5%AF%20a%20dal%C5%A1%C3%ADch%20n%C3%A1rodnost%C3%AD.%20Pono%C5%99te%20se%20do%20autentick%C3%BDch%20pov%C3%ADdek%2C%20kter%C3%A9%20zachycuj%C3%AD%20radosti%20i%20bolesti%20%C5%BEivota%20v%20dob%C4%9B%2C%20kter%C3%A1%20nav%C5%BEdy%20zm%C4%9Bnila%20tv%C3%A1%C5%99%20tohoto%20regionu.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
-        <span class="mks-ico">🗓️</span><span class="mks-label">Přidat do Google kalendáře</span>
-      </a>
-      <a class="mks-btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AZUaC4MzJjToUKn8iZy1TqA9D%40mks-events%0D%0ADTSTAMP%3A20251015T173144Z%0D%0ASUMMARY%3AAutorsk%C3%A9%20%C4%8Dten%C3%AD%20-%20David%20Jan%20%C5%BD%C3%A1k%0D%0ADTSTART%3A20251114T170000Z%0D%0ADTEND%3A20251114T183000Z%0D%0ADESCRIPTION%3AAutor%20p%C5%99edstav%C3%AD%20svou%20novou%20knihu%20%E2%80%9C%20Sudety%3A%20Ztracen%C3%BD%20r%C3%A1j%E2%80%9C%20-%20%20p%C5%99edv%C3%A1le%C4%8Dn%C3%A9%20pohrani%C4%8D%C3%AD%5C%2C%20kde%20se%20prol%C3%ADnaly%20osudy%20%C4%8Cech%C5%AF%5C%2C%20N%C4%9Bmc%C5%AF%5C%2C%20%C5%BDid%C5%AF%20a%20dal%C5%A1%C3%ADch%20n%C3%A1rodnost%C3%AD.%20Pono%C5%99te%20se%20do%20autentick%C3%BDch%20pov%C3%ADdek%5C%2C%20kter%C3%A9%20zachycuj%C3%AD%20radosti%20i%20bolesti%20%C5%BEivota%20v%20dob%C4%9B%5C%2C%20kter%C3%A1%20nav%C5%BEdy%20zm%C4%9Bnila%20tv%C3%A1%C5%99%20tohoto%20regionu.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="autorske-cteni-david-jan-zak.ics" title="Přidat do Apple kalendáře">
-        <span class="mks-ico">🍎</span><span class="mks-label">Přidat do Apple kalendáře</span>
-      </a>
     </div>
-      </div>
-    </article></div>
-    <div id="mks-load-more" style="height:1px"></div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A60ea699a-c960-4b26-b52d-c6063913fdc5%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A9b3d9b5d-9f05-4167-80c6-786653aee1a4%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A0ae0869b-5228-4397-a88d-84159aa09373%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A9c2815f4-6e27-43c9-ad66-b01c12554373%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Aa54cd28e-ff2b-458a-bd6f-26562a20625c%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Acd4e4455-3bc1-47fa-8d3f-915ffa929a8e%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A015ceea9-1f3e-40e1-8a52-36b12fa6f39c%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A533839a8-cc7d-4583-b9ad-1214fb0a2e4d%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Ae41264f6-e532-45c1-b5c3-034e59cbdf4f%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A46f43d39-a9d1-49b9-a91b-8d6c36d6831a%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Aef778210-fca5-4a67-b709-6bf26f2a6b81%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A28c11d66-175f-4233-9310-c9d61711dbd0%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A7cee98db-e537-4ce7-b6b9-b20c1d91f873%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A3eba067c-74a2-45b3-be92-554318040141%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A98786d88-004b-476c-ab1b-37e78836c955%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Aff925f0d-9ec5-4909-bd77-355af32784d5%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A87a471e5-cbc3-498a-8c2f-0b75e8e696bb%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article>
+
+  <article class="card" data-calendar="">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="/img/-.jpg" alt=""></div></div>
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 1.1.1970</span>
+      <span class="badge">⏰ 1:00</span>
+    </div>
+      <h2 class="title"></h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Ud%C3%A1lost&amp;dates=19700101T000000Z%2F19700101T000000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře"><span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span></a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A67e2d712-4dba-4e21-ad5d-32462717b380%40mks-events%0D%0ADTSTAMP%3A20251015T180143Z%0D%0ASUMMARY%3AUd%C3%A1lost%0D%0ADTSTART%3A19700101T000000Z%0D%0ADTEND%3A19700101T000000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR" download="akce.ics" title="Přidat do Apple kalendáře"><span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span></a>
+    </div>
+    </div>
+  </article></div>
+    <div id="load-more-sentinel" style="height:1px"></div>
   </div>
 
-  <div class="mks-lightbox" id="mks-lightbox" aria-hidden="true"><img id="mks-lightbox-img" alt=""></div>
+  <div class="lightbox" id="lightbox" aria-hidden="true"><img id="lightbox-img" alt=""></div>
 
 <script>
 window.__REST_EVENTS = [];
 
-/* helpers */
-function h(s){return String(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
-function ha(s){return h(s).replace(/"/g,'&quot;')}
-function slugify(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'akce'}
+function h(s){return String(s||"").replace(/[&<>]/g,function(c){return ({ "&":"&amp;","<":"&lt;",">":"&gt;" })[c];})}
+function ha(s){return h(s).replace(/"/g,"&quot;")}
+function slugify(s){return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"akce"}
 
-/* klientská karta stejného tvaru */
 function renderCardHTML(d){
-  var img = '';
-  if (d.image) img = /^https?:\/\//i.test(d.image) ? d.image : (d.image[0] === '/' ? d.image : ('/' + d.image));
-
-  var media = img
-    ? '<div class="mks-media"><div class="mks-poster-wrap"><img class="mks-poster" loading="lazy" decoding="async" src="'+ha(img)+'" alt=""></div></div>'
-    : '';
-
-  var meta = '<div class="mks-meta">'+
-               (d.location ? '<span class="mks-badge mks-badge--location">📍 '+h(d.location)+'</span>' : '')+
-               '<span class="mks-badge">📅 '+h(d.dateBadge)+'</span>'+
-               (d.showTime ? ' <span class="mks-badge">⏰ '+h(d.timeText)+'</span>' : '')+
-             '</div>';
-
-  var title = '<h2 class="mks-title">'+h(d.title)+'</h2>';
-  var desc  = d.details? '<div class="mks-desc">'+h(d.details)+'</div>' : '';
-
-  const gtxt = 'Přidat do Google kalendáře';
-  const atxt = 'Přidat do Apple kalendáře';
-
-  return '<article class="mks-card" data-calendar="'+ha(d.calendar)+'">'+
-           media+
-           '<div class="mks-body">'+
-             meta + title + desc +
-             '<div class="mks-actions">'+
-               '<a class="mks-btn" href="'+ha(d.gcalUrl)+'" target="_blank" rel="noopener" title="'+ha(gtxt)+'"><span class="mks-ico">🗓️</span> <span class="mks-label">'+h(gtxt)+'</span></a>'+
-               '<a class="mks-btn" href="'+ha(d.icsDataUri)+'" download="'+ha(slugify(d.title))+'.ics" title="'+ha(atxt)+'"><span class="mks-ico">🍎</span> <span class="mks-label">'+h(atxt)+'</span></a>'+
-             '</div>'+
-           '</div>'+
-         '</article>';
+  var media = d.image ? '<div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="' + ha(d.image) + '" alt=""></div></div>' : "";
+  var meta = '<div class="meta">' + (d.location?'<span class="badge badge--location">📍 '+h(d.location)+'</span>':"") + '<span class="badge">📅 '+h(d.dateBadge)+'</span>' + (d.showTime?' <span class="badge">⏰ '+h(d.timeText)+'</span>':"") + '</div>';
+  var title = '<h2 class="title">'+h(d.title)+'</h2>';
+  var desc  = d.details? '<div class="desc">'+h(d.details)+'</div>' : "";
+  var gtxt = "Přidat do Google kalendáře"; var atxt="Přidat do Apple kalendáře";
+  return '<article class="card" data-calendar="' + ha(d.calendar) + '">' + media + '<div class="body">' + meta + title + desc + '<div class="actions">' +
+         '<a class="btn" href="' + ha(d.gcalUrl) + '" target="_blank" rel="noopener" title="' + ha(gtxt) + '"><span class="ico">🗓️</span><span class="label">' + h(gtxt) + '</span></a>' +
+         '<a class="btn" href="' + ha(d.icsDataUri) + '" download="' + ha(slugify(d.title)) + '.ics" title="' + ha(atxt) + '"><span class="ico">🍎</span><span class="label">' + h(atxt) + '</span></a>' +
+         '</div></div></article>';
 }
 
-/* iFrame resize */
-function postHeight(){var h=document.documentElement.scrollHeight||document.body.scrollHeight||0; if(parent&&parent.postMessage) parent.postMessage({type:'resize-iframe',height:h},'*');}
+function postHeight(){ var h=document.documentElement.scrollHeight||document.body.scrollHeight||0; if(parent && parent.postMessage){ parent.postMessage({type:"resize-iframe",height:h},"*"); } }
 function sendHeight(){ postHeight(); }
-window.addEventListener('load', sendHeight);
-window.addEventListener('resize', sendHeight);
-document.addEventListener('load', sendHeight, true);
-try{ var mo=new MutationObserver(function(){ sendHeight(); }); mo.observe(document.documentElement,{childList:true,subtree:true,attributes:true,characterData:true}); }catch(_){}
-try{ var ro=new ResizeObserver(function(){ sendHeight(); }); ro.observe(document.body); }catch(_){}
+window.addEventListener("load", sendHeight);
+window.addEventListener("resize", sendHeight);
+document.addEventListener("load", sendHeight, true);
+try{ new MutationObserver(function(){ sendHeight(); }).observe(document.documentElement,{childList:true,subtree:true,attributes:true,characterData:true}); }catch(_){ }
+try{ new ResizeObserver(function(){ sendHeight(); }).observe(document.body); }catch(_){ }
 setTimeout(sendHeight,300); setTimeout(sendHeight,1200);
 
-/* Lightbox */
-(function(){
-  var box=document.getElementById('mks-lightbox'), img=document.getElementById('mks-lightbox-img');
-  function openBox(src, alt){ if(!src) return; img.src=src; img.alt=alt||''; box.classList.add('open'); box.setAttribute('aria-hidden','false'); document.body.classList.add('mks-lb-open'); sendHeight(); }
-  function closeBox(){ box.classList.remove('open'); box.setAttribute('aria-hidden','true'); document.body.classList.remove('mks-lb-open'); setTimeout(function(){ img.src=''; sendHeight(); },150); }
-  document.addEventListener('click',function(e){
-    var t=e.target;
-    if(t && t.tagName==='IMG' && t.classList.contains('mks-poster')){ e.preventDefault(); openBox(t.currentSrc||t.src, t.alt||''); return; }
-    if(t===box){ e.preventDefault(); closeBox(); }
-  }, true);
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeBox(); } });
+(function(){ var box=document.getElementById("lightbox"), img=document.getElementById("lightbox-img");
+  function openBox(src, alt){ if(!src) return; img.src=src; img.alt=alt||""; box.classList.add("open"); box.setAttribute("aria-hidden","false"); document.body.classList.add("lb-open"); sendHeight(); }
+  function closeBox(){ box.classList.remove("open"); box.setAttribute("aria-hidden","true"); document.body.classList.remove("lb-open"); setTimeout(function(){ img.src=""; sendHeight(); },150); }
+  document.addEventListener("click",function(e){ var t=e.target; if(t && t.tagName==="IMG" && t.classList.contains("poster")){ e.preventDefault(); openBox(t.currentSrc||t.src,t.alt||""); return; } if(t===box){ e.preventDefault(); closeBox(); } }, true);
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeBox(); } });
 })();
 
-/* fallback: když se obrázek nenačte */
-document.addEventListener('error',function(e){
-  var t=e.target; if(t&&t.tagName==='IMG'&&t.classList.contains('mks-poster')){
-    var wrap=t.closest('.mks-media'); if(wrap) wrap.style.display='none'; sendHeight();
-  }
-},true);
+document.addEventListener("error",function(e){ var t=e.target; if(t&&t.tagName==="IMG"&&t.classList.contains("poster")){ var wrap=t.closest(".media"); if(wrap) wrap.style.display="none"; sendHeight(); } },true);
 
-/* Lazy render */
-(function(){
-  var data = Array.isArray(window.__REST_EVENTS)? window.__REST_EVENTS.slice():[];
-  if(!data.length) return;
-  var grid = document.getElementById('mks-grid');
-  var sent = document.getElementById('mks-load-more');
-  var CHUNK = 6;
-
-  function appendChunk(){
-    var part=data.splice(0,CHUNK); if(!part.length) return;
-    var html=part.map(renderCardHTML).join(''); var tmp=document.createElement('div'); tmp.innerHTML=html;
-    while(tmp.firstChild) grid.appendChild(tmp.firstChild);
-    sendHeight();
-  }
+(function(){ var data = Array.isArray(window.__REST_EVENTS)? window.__REST_EVENTS.slice():[]; if(!data.length) return; var grid=document.getElementById("grid"); var sent=document.getElementById("load-more-sentinel"); var CHUNK=6;
+  function appendChunk(){ var part=data.splice(0,CHUNK); if(!part.length) return; var html=part.map(renderCardHTML).join(""); var tmp=document.createElement("div"); tmp.innerHTML=html; while(tmp.firstChild) grid.appendChild(tmp.firstChild); sendHeight(); }
   appendChunk();
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(ent){ if(ent.isIntersecting){ appendChunk(); if(!data.length){ io.disconnect(); sent.remove(); sendHeight(); } } });
-  },{root:null,rootMargin:'600px 0px',threshold:0});
+  var io=new IntersectionObserver(function(es){ es.forEach(function(ent){ if(ent.isIntersecting){ appendChunk(); if(!data.length){ io.disconnect(); sent.remove(); sendHeight(); } }); }); },{root:null,rootMargin:"600px 0px",threshold:0});
   io.observe(sent);
 })();
 </script>
