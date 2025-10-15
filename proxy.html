@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="cs"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Program akcí</title>
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff6f2; --card:#fff; --text:#202225; --muted:#555; --chip:#f5f6fa; --divider:#e8e8ee;
+  --rail:56px;
+}
+*{box-sizing:border-box}
+body{ margin:0;padding:16px;background:linear-gradient(180deg,var(--bg),#fff0ec);
+      color:var(--text);font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu }
+.wrapper{max-width:980px;margin:0 auto}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
+
+/* karta + kolejnice */
+.card{
+  position:relative;
+  display:flex; gap:18px; align-items:stretch;
+  background:var(--card); border-radius:16px; padding:18px;
+  padding-left:calc(18px + var(--rail));
+  box-shadow:0 6px 24px rgba(0,0,0,.08);
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.card::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:var(--rail);
+  background:var(--bar,#f4a261); border-radius:16px 0 0 16px; }
+.card::after{ content:attr(data-calendar); position:absolute; left:0; top:0; bottom:0; width:var(--rail);
+  display:flex; align-items:center; justify-content:center; writing-mode:vertical-rl; text-orientation:mixed;
+  color:#fff; font-weight:700; letter-spacing:.3px; padding:8px 0; text-align:center; overflow:hidden; opacity:.95; }
+.card:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.12); }
+
+/* plakát */
+.media{ flex:0 0 340px; max-width:340px; align-self:flex-start; }
+.poster-wrap{ background:#fff; border-radius:12px; overflow:hidden; border:1px solid rgba(0,0,0,.06);
+              box-shadow:0 4px 12px rgba(0,0,0,.06); cursor: zoom-in; }
+.poster{ display:block; width:100%; height:auto; max-height:640px; transition:.3s transform,.3s filter; }
+.card:hover .poster{ transform:scale(1.03); filter:brightness(1.05); }
+
+/* pravý sloupec */
+.body{flex:1; min-width:0; display:flex; flex-direction:column;}
+
+/* META: vpravo – 📍Místo → 📅Datum → ⏰Čas, vše jako badge */
+.meta{
+  display:flex; align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid var(--divider); justify-content:flex-end; flex-wrap:wrap;
+}
+.badge{
+  display:inline-block; background:var(--chip); color:#3d4051;
+  border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600;
+}
+.badge--location{}
+
+/* TITULEK a POPIS – bez čar */
+.title{ margin:0; padding:12px 0 6px; font-size:26px; line-height:1.25; font-weight:700; }
+.desc{ color:#2a2d3a; font-size:17px; padding:6px 0 12px; }
+
+/* tlačítka – čára jen tady */
+.actions{
+  margin-top:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%;
+  border-top:1px solid var(--divider); padding-top:12px;
+  container-type:inline-size; /* pro container query */
+}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(0,0,0,.1); background:#fff;
+  padding:8px 12px; border-radius:10px; font-weight:600; font-size:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+  cursor:pointer; color:#1a1f36;
+  text-decoration:none;             /* NEpodtrhávat */
+}
+.btn:hover,.btn:focus{ text-decoration:none }      /* přepiš globální a:hover */
+.btn .ico{ font-size:16px; line-height:1; text-decoration:none }
+.btn .label{ display:inline }
+
+/* —— Compact tlačítka (jen ikonky) — čistě CSS —— */
+@supports (container-type: inline-size) {
+  @container (max-width: 440px) {
+    .actions{ gap:12px }
+    .actions .btn{ padding:10px; width:44px; height:44px; border-radius:12px }
+    .actions .btn .label{ display:none }
+    .actions .btn .ico{ font-size:20px }
+  }
+}
+@supports not (container-type: inline-size) {
+  @media (max-width: 520px){
+    .actions{ gap:12px }
+    .actions .btn{ padding:10px; width:44px; height:44px; border-radius:12px }
+    .actions .btn .label{ display:none }
+    .actions .btn .ico{ font-size:20px }
+  }
+}
+
+/* barvy podle kalendáře */
+.card[data-calendar*="KD"]{ --bar:#e76f51; }
+.card[data-calendar*="Hamr"]{ --bar:#2a9d8f; }
+.card[data-calendar*="Taneční"]{ --bar:#e9c46a; }
+.card[data-calendar*="Sviny"]{ --bar:#264653; }
+
+/* responsive */
+@media (max-width:740px){
+  .card{ flex-direction:column; --rail:42px; }
+  .card::after{ font-size:12px; }
+  .media{ flex:unset; max-width:100% }
+}
+
+/* globální odkazy */
+a{ color:#0b69d7; text-decoration:none }
+a:hover{ text-decoration:underline }
+/* …ale tlačítka NIKDY nepodtrhávat */
+.actions .btn, .actions .btn:hover, .actions .btn:focus{ text-decoration:none }
+</style>
+<script type="application/ld+json">
+[
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Tajemství duše ukrytá v mozku",
+  "startDate": "2025-10-15T16:30:00+02:00",
+  "endDate": "2025-10-15T18:30:00+02:00",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Knihovna"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Senior Resort Hluboká",
+  "startDate": "2025-10-16T17:00:00+02:00",
+  "endDate": "2025-10-16T18:00:00+02:00",
+  "description": "Ve čtvrtek 16. 10. od 17:00 se uskuteční přátelské setkání spojené s prezentací projektu Senior Resort Hluboká. Přijďte se dozvědět více a zeptat se na vše, co Vás zajímá."
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "ZŠ - natáčení",
+  "startDate": "2025-10-20T12:00:00+02:00",
+  "endDate": "2025-10-20T13:00:00+02:00",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Literárně - hudební večer",
+  "startDate": "2025-10-21T17:00:00+02:00",
+  "endDate": "2025-10-21T18:40:00+02:00",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Foyer Kulturního domu Trhové Sviny"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Rozsvěcení starého hřbitova",
+  "startDate": "2025-11-01T19:00:00+01:00",
+  "endDate": "2025-11-01T20:30:00+01:00",
+  "description": "Po roce opět zapálíme svíčky na místě zrušeného hřbitova.",
+  "location": {
+    "@type": "Place",
+    "name": "Park za kostelem Nanebevzetí Panny Marie"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Den pro dětskou knihu",
+  "startDate": "2025-11-05T12:00:00+01:00",
+  "endDate": "2025-11-06T18:00:00+01:00",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Knihovna"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Křest knihy SVINENSKÝ ULIČNÍK",
+  "startDate": "2025-11-08T15:00:00+01:00",
+  "endDate": "2025-11-08T16:30:00+01:00",
+  "description": "Křest knihy mladého autora - svinenského kronikáře Matěje Průky, který nám na jejích stránkách odtajní, jak se měnily a vyvíjeli názvy ulic v Trhových Svinech a nejen to.",
+  "location": {
+    "@type": "Place",
+    "name": "Kinosál KD"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Zázrak ve stínu měsíce",
+  "startDate": "2025-11-11T18:00:00+01:00",
+  "endDate": "2025-11-11T20:00:00+01:00",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Knihovna"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Autorské čtení - David Jan Žák",
+  "startDate": "2025-11-14T18:00:00+01:00",
+  "endDate": "2025-11-14T19:30:00+01:00",
+  "description": "Autor představí svou novou knihu “ Sudety: Ztracený ráj“ -  předválečné pohraničí, kde se prolínaly osudy Čechů, Němců, Židů a dalších národností. Ponořte se do autentických povídek, které zachycují radosti i bolesti života v době, která navždy změnila tvář tohoto regionu."
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Hospodský kvíz",
+  "startDate": "2025-11-15T18:00:00+01:00",
+  "endDate": "2025-11-15T21:30:00+01:00",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Zastupitelstvo",
+  "startDate": "2025-11-17T17:00:00+01:00",
+  "endDate": "2025-11-17T19:00:00+01:00",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "ZUŠ workshop",
+  "startDate": "2025-11-25T09:00:00+01:00",
+  "endDate": "2025-11-25T11:00:00+01:00",
+  "description": "100 lidí do \"U\""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Po stopách krále Šumavy",
+  "startDate": "2025-11-25T17:00:00+01:00",
+  "endDate": "2025-11-25T19:00:00+01:00",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Knihovna"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Bicí oddělení",
+  "startDate": "2025-11-25T17:00:00+01:00",
+  "endDate": "2025-11-25T19:00:00+01:00",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Od hospody k hospodě V",
+  "startDate": "2025-12-11T18:00:00+01:00",
+  "endDate": "2025-12-11T20:00:00+01:00",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Sál KD"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Setkání se starostou",
+  "startDate": "2026-01-19T18:00:00+01:00",
+  "endDate": "2026-01-19T19:30:00+01:00",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Divadelní kavárna"
+  }
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "ZŠ - předávání vysvědčení",
+  "startDate": "2026-06-29T17:00:00+02:00",
+  "endDate": "2026-06-29T19:00:00+02:00",
+  "description": ""
+}
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Pódium Nežetice",
+  "startDate": "2026-07-18",
+  "endDate": "2026-07-18",
+  "description": "",
+  "location": {
+    "@type": "Place",
+    "name": "Nežetice"
+  }
+}
+]
+</script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="grid" id="grid"><article class="card" data-calendar="Kulturní dům">
+    
+    <div class="body">
+      
+    <div class="meta">
+      <span class="badge badge--location">📍 Knihovna</span>
+      <span class="badge">📅 15.10.2025</span>
+      <span class="badge">⏰ 16:30 – 18:30</span>
+    </div>
+      <h2 class="title">Tajemství duše ukrytá v mozku</h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Tajemstv%C3%AD%20du%C5%A1e%20ukryt%C3%A1%20v%20mozku&amp;dates=20251015T143000Z/20251015T163000Z&amp;details=&amp;location=Knihovna&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
+        <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AG%2BAd644D%2B8ptyU46stdlDdFN%40mks-events%0D%0ADTSTAMP%3A20251015T193914Z%0D%0ASUMMARY%3ATajemstv%C3%AD%20du%C5%A1e%20ukryt%C3%A1%20v%20mozku%0D%0ADTSTART%3A20251015T143000Z%0D%0ADTEND%3A20251015T163000Z%0D%0ALOCATION%3AKnihovna%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-15-tajemstvi-duse-ukryta-v-mozku.ics" title="Přidat do Apple kalendáře">
+        <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
+      </a>
+    </div>
+    </div>
+  </article><article class="card" data-calendar="Centrum komunitních aktivit">
+    
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 16.10.2025</span>
+      <span class="badge">⏰ 17:00 – 18:00</span>
+    </div>
+      <h2 class="title">Senior Resort Hluboká</h2>
+      <div class="desc">Ve čtvrtek 16. 10. od 17:00 se uskuteční přátelské setkání spojené s prezentací projektu Senior Resort Hluboká. Přijďte se dozvědět více a zeptat se na vše, co Vás zajímá.</div>
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Senior%20Resort%20Hlubok%C3%A1&amp;dates=20251016T150000Z/20251016T160000Z&amp;details=Ve%20%C4%8Dtvrtek%2016.%2010.%20od%2017%3A00%20se%20uskute%C4%8Dn%C3%AD%20p%C5%99%C3%A1telsk%C3%A9%20setk%C3%A1n%C3%AD%20spojen%C3%A9%20s%20prezentac%C3%AD%20projektu%20Senior%20Resort%20Hlubok%C3%A1.%20P%C5%99ij%C4%8Fte%20se%20dozv%C4%9Bd%C4%9Bt%20v%C3%ADce%20a%20zeptat%20se%20na%20v%C5%A1e%2C%20co%20V%C3%A1s%20zaj%C3%ADm%C3%A1.&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
+        <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AroaWeznT%2FLG1%2FiNKVEjqes%2BF%40mks-events%0D%0ADTSTAMP%3A20251015T193922Z%0D%0ASUMMARY%3ASenior%20Resort%20Hlubok%C3%A1%0D%0ADTSTART%3A20251016T150000Z%0D%0ADTEND%3A20251016T160000Z%0D%0ADESCRIPTION%3AVe%20%C4%8Dtvrtek%2016.%2010.%20od%2017%3A00%20se%20uskute%C4%8Dn%C3%AD%20p%C5%99%C3%A1telsk%C3%A9%20setk%C3%A1n%C3%AD%20spojen%C3%A9%20s%20prezentac%C3%AD%20projektu%20Senior%20Resort%20Hlubok%C3%A1.%20P%C5%99ij%C4%8Fte%20se%20dozv%C4%9Bd%C4%9Bt%20v%C3%ADce%20a%20zeptat%20se%20na%20v%C5%A1e%5C%2C%20co%20V%C3%A1s%20zaj%C3%ADm%C3%A1.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-16-senior-resort-hluboka.ics" title="Přidat do Apple kalendáře">
+        <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
+      </a>
+    </div>
+    </div>
+  </article><article class="card" data-calendar="Kulturní dům">
+    
+    <div class="body">
+      
+    <div class="meta">
+      
+      <span class="badge">📅 20.10.2025</span>
+      <span class="badge">⏰ 12:00 – 13:00</span>
+    </div>
+      <h2 class="title">ZŠ - natáčení</h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Z%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD&amp;dates=20251020T100000Z/20251020T110000Z&amp;details=&amp;location=&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
+        <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Akc8Kpw3aKDYMJZ5YaK1%2FXQOe%40mks-events%0D%0ADTSTAMP%3A20251015T193905Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20nat%C3%A1%C4%8Den%C3%AD%0D%0ADTSTART%3A20251020T100000Z%0D%0ADTEND%3A20251020T110000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-20-zs-nataceni.ics" title="Přidat do Apple kalendáře">
+        <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
+      </a>
+    </div>
+    </div>
+  </article><article class="card" data-calendar="Kulturní dům">
+    
+    <div class="body">
+      
+    <div class="meta">
+      <span class="badge badge--location">📍 Foyer Kulturního domu Trhové Sviny</span>
+      <span class="badge">📅 21.10.2025</span>
+      <span class="badge">⏰ 17:00 – 18:40</span>
+    </div>
+      <h2 class="title">Literárně - hudební večer</h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Liter%C3%A1rn%C4%9B%20-%20hudebn%C3%AD%20ve%C4%8Der&amp;dates=20251021T150000Z/20251021T164000Z&amp;details=&amp;location=Foyer%20Kulturn%C3%ADho%20domu%20Trhov%C3%A9%20Sviny&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
+        <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AyDH0ZK%2F1sBxPXw3RmrlQ68dU%40mks-events%0D%0ADTSTAMP%3A20251015T193918Z%0D%0ASUMMARY%3ALiter%C3%A1rn%C4%9B%20-%20hudebn%C3%AD%20ve%C4%8Der%0D%0ADTSTART%3A20251021T150000Z%0D%0ADTEND%3A20251021T164000Z%0D%0ALOCATION%3AFoyer%20Kulturn%C3%ADho%20domu%20Trhov%C3%A9%20Sviny%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-10-21-literarne-hudebni-vecer.ics" title="Přidat do Apple kalendáře">
+        <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
+      </a>
+    </div>
+    </div>
+  </article><article class="card" data-calendar="Kostel Nanebevzetí Panny Marie">
+    
+    <div class="body">
+      
+    <div class="meta">
+      <span class="badge badge--location">📍 Park za kostelem Nanebevzetí Panny Marie</span>
+      <span class="badge">📅 1.11.2025</span>
+      <span class="badge">⏰ 19:00 – 20:30</span>
+    </div>
+      <h2 class="title">Rozsvěcení starého hřbitova</h2>
+      <div class="desc">Po roce opět zapálíme svíčky na místě zrušeného hřbitova.</div>
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Rozsv%C4%9Bcen%C3%AD%20star%C3%A9ho%20h%C5%99bitova&amp;dates=20251101T180000Z/20251101T193000Z&amp;details=Po%20roce%20op%C4%9Bt%20zap%C3%A1l%C3%ADme%20sv%C3%AD%C4%8Dky%20na%20m%C3%ADst%C4%9B%20zru%C5%A1en%C3%A9ho%20h%C5%99bitova.&amp;location=Park%20za%20kostelem%20Nanebevzet%C3%AD%20Panny%20Marie&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
+        <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ATzCNOY1kVfGh7GQRWHTgPmNg%40mks-events%0D%0ADTSTAMP%3A20251015T193913Z%0D%0ASUMMARY%3ARozsv%C4%9Bcen%C3%AD%20star%C3%A9ho%20h%C5%99bitova%0D%0ADTSTART%3A20251101T180000Z%0D%0ADTEND%3A20251101T193000Z%0D%0ALOCATION%3APark%20za%20kostelem%20Nanebevzet%C3%AD%20Panny%20Marie%0D%0ADESCRIPTION%3APo%20roce%20op%C4%9Bt%20zap%C3%A1l%C3%ADme%20sv%C3%AD%C4%8Dky%20na%20m%C3%ADst%C4%9B%20zru%C5%A1en%C3%A9ho%20h%C5%99bitova.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-11-01-rozsveceni-stareho-hrbitova.ics" title="Přidat do Apple kalendáře">
+        <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
+      </a>
+    </div>
+    </div>
+  </article><article class="card" data-calendar="Kulturní dům">
+    
+    <div class="body">
+      
+    <div class="meta">
+      <span class="badge badge--location">📍 Knihovna</span>
+      <span class="badge">📅 5.11.2025 – 6.11.2025</span>
+      <span class="badge">⏰ 12:00 – 18:00</span>
+    </div>
+      <h2 class="title">Den pro dětskou knihu</h2>
+      
+      
+    <div class="actions">
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Den%20pro%20d%C4%9Btskou%20knihu&amp;dates=20251105T110000Z/20251106T170000Z&amp;details=&amp;location=Knihovna&amp;sf=true&amp;output=xml" target="_blank" rel="noopener" title="Přidat do Google kalendáře">
+        <span class="ico">🗓️</span><span class="label">Přidat do Google kalendáře</span>
+      </a>
+      <a class="btn" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AJXcAnQikeRx%2BmMffS5QuRO1z%40mks-events%0D%0ADTSTAMP%3A20251015T193915Z%0D%0ASUMMARY%3ADen%20pro%20d%C4%9Btskou%20knihu%0D%0ADTSTART%3A20251105T110000Z%0D%0ADTEND%3A20251106T170000Z%0D%0ALOCATION%3AKnihovna%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="2025-11-05-den-pro-detskou-knihu.ics" title="Přidat do Apple kalendáře">
+        <span class="ico">🍎</span><span class="label">Přidat do Apple kalendáře</span>
+      </a>
+    </div>
+    </div>
+  </article></div>
+    <div id="load-more-sentinel" style="height:1px"></div>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true"><img id="lightbox-img" alt=""></div>
+
+<script>
+window.__REST_EVENTS = [{"title":"Křest knihy SVINENSKÝ ULIČNÍK","calendar":"Kulturní dům","location":"Kinosál KD","details":"Křest knihy mladého autora - svinenského kronikáře Matěje Průky, který nám na jejích stránkách odtajní, jak se měnily a vyvíjeli názvy ulic v Trhových Svinech a nejen to.","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=K%C5%99est%20knihy%20SVINENSK%C3%9D%20ULI%C4%8CN%C3%8DK&dates=20251108T140000Z/20251108T153000Z&details=K%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%2C%20jak%20se%20m%C4%9Bnily%20a%20vyv%C3%ADjeli%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.&location=Kinos%C3%A1l%20KD&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2BMH6XL%2FX8NdKYH35Tf9xgQyG%40mks-events%0D%0ADTSTAMP%3A20251015T193920Z%0D%0ASUMMARY%3AK%C5%99est%20knihy%20SVINENSK%C3%9D%20ULI%C4%8CN%C3%8DK%0D%0ADTSTART%3A20251108T140000Z%0D%0ADTEND%3A20251108T153000Z%0D%0ALOCATION%3AKinos%C3%A1l%20KD%0D%0ADESCRIPTION%3AK%C5%99est%20knihy%20mlad%C3%A9ho%20autora%20-%20svinensk%C3%A9ho%20kronik%C3%A1%C5%99e%20Mat%C4%9Bje%20Pr%C5%AFky%5C%2C%20kter%C3%BD%20n%C3%A1m%20na%20jej%C3%ADch%20str%C3%A1nk%C3%A1ch%20odtajn%C3%AD%5C%2C%20jak%20se%20m%C4%9Bnily%20a%20vyv%C3%ADjeli%20n%C3%A1zvy%20ulic%20v%20Trhov%C3%BDch%20Svinech%20a%20nejen%20to.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"8.11.2025","showTime":true,"timeText":"15:00 – 16:30"},{"title":"Zázrak ve stínu měsíce","calendar":"Kulturní dům","location":"Knihovna","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Z%C3%A1zrak%20ve%20st%C3%ADnu%20m%C4%9Bs%C3%ADce&dates=20251111T170000Z/20251111T190000Z&details=&location=Knihovna&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ArU51lz0ZCIxkVd01R3jeV7%2F6%40mks-events%0D%0ADTSTAMP%3A20251015T193911Z%0D%0ASUMMARY%3AZ%C3%A1zrak%20ve%20st%C3%ADnu%20m%C4%9Bs%C3%ADce%0D%0ADTSTART%3A20251111T170000Z%0D%0ADTEND%3A20251111T190000Z%0D%0ALOCATION%3AKnihovna%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"11.11.2025","showTime":true,"timeText":"18:00 – 20:00"},{"title":"Autorské čtení - David Jan Žák","calendar":"Kulturní a informační centrum","location":"","details":"Autor představí svou novou knihu “ Sudety: Ztracený ráj“ -  předválečné pohraničí, kde se prolínaly osudy Čechů, Němců, Židů a dalších národností. Ponořte se do autentických povídek, které zachycují radosti i bolesti života v době, která navždy změnila tvář tohoto regionu.","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Autorsk%C3%A9%20%C4%8Dten%C3%AD%20-%20David%20Jan%20%C5%BD%C3%A1k&dates=20251114T170000Z/20251114T183000Z&details=Autor%20p%C5%99edstav%C3%AD%20svou%20novou%20knihu%20%E2%80%9C%20Sudety%3A%20Ztracen%C3%BD%20r%C3%A1j%E2%80%9C%20-%20%20p%C5%99edv%C3%A1le%C4%8Dn%C3%A9%20pohrani%C4%8D%C3%AD%2C%20kde%20se%20prol%C3%ADnaly%20osudy%20%C4%8Cech%C5%AF%2C%20N%C4%9Bmc%C5%AF%2C%20%C5%BDid%C5%AF%20a%20dal%C5%A1%C3%ADch%20n%C3%A1rodnost%C3%AD.%20Pono%C5%99te%20se%20do%20autentick%C3%BDch%20pov%C3%ADdek%2C%20kter%C3%A9%20zachycuj%C3%AD%20radosti%20i%20bolesti%20%C5%BEivota%20v%20dob%C4%9B%2C%20kter%C3%A1%20nav%C5%BEdy%20zm%C4%9Bnila%20tv%C3%A1%C5%99%20tohoto%20regionu.&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AZUaC4MzJjToUKn8iZy1TqA9D%40mks-events%0D%0ADTSTAMP%3A20251015T193921Z%0D%0ASUMMARY%3AAutorsk%C3%A9%20%C4%8Dten%C3%AD%20-%20David%20Jan%20%C5%BD%C3%A1k%0D%0ADTSTART%3A20251114T170000Z%0D%0ADTEND%3A20251114T183000Z%0D%0ADESCRIPTION%3AAutor%20p%C5%99edstav%C3%AD%20svou%20novou%20knihu%20%E2%80%9C%20Sudety%3A%20Ztracen%C3%BD%20r%C3%A1j%E2%80%9C%20-%20%20p%C5%99edv%C3%A1le%C4%8Dn%C3%A9%20pohrani%C4%8D%C3%AD%5C%2C%20kde%20se%20prol%C3%ADnaly%20osudy%20%C4%8Cech%C5%AF%5C%2C%20N%C4%9Bmc%C5%AF%5C%2C%20%C5%BDid%C5%AF%20a%20dal%C5%A1%C3%ADch%20n%C3%A1rodnost%C3%AD.%20Pono%C5%99te%20se%20do%20autentick%C3%BDch%20pov%C3%ADdek%5C%2C%20kter%C3%A9%20zachycuj%C3%AD%20radosti%20i%20bolesti%20%C5%BEivota%20v%20dob%C4%9B%5C%2C%20kter%C3%A1%20nav%C5%BEdy%20zm%C4%9Bnila%20tv%C3%A1%C5%99%20tohoto%20regionu.%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"14.11.2025","showTime":true,"timeText":"18:00 – 19:30"},{"title":"Hospodský kvíz","calendar":"Taneční sál","location":"","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Hospodsk%C3%BD%20kv%C3%ADz&dates=20251115T170000Z/20251115T203000Z&details=&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AhTlueWAf3kRljTykMThOo66I%40mks-events%0D%0ADTSTAMP%3A20251015T193908Z%0D%0ASUMMARY%3AHospodsk%C3%BD%20kv%C3%ADz%0D%0ADTSTART%3A20251115T170000Z%0D%0ADTEND%3A20251115T203000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"15.11.2025","showTime":true,"timeText":"18:00 – 21:30"},{"title":"Zastupitelstvo","calendar":"Taneční sál","location":"","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Zastupitelstvo&dates=20251117T160000Z/20251117T180000Z&details=&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AoWAXio78qQ2BSoc5t3X1dePn%40mks-events%0D%0ADTSTAMP%3A20251015T193906Z%0D%0ASUMMARY%3AZastupitelstvo%0D%0ADTSTART%3A20251117T160000Z%0D%0ADTEND%3A20251117T180000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"17.11.2025","showTime":true,"timeText":"17:00 – 19:00"},{"title":"ZUŠ workshop","calendar":"Taneční sál","location":"","details":"100 lidí do \"U\"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=ZU%C5%A0%20workshop&dates=20251125T080000Z/20251125T100000Z&details=100%20lid%C3%AD%20do%20%22U%22&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3ATaXoW8cPtYIiDc2CvBtHDJlI%40mks-events%0D%0ADTSTAMP%3A20251015T193917Z%0D%0ASUMMARY%3AZU%C5%A0%20workshop%0D%0ADTSTART%3A20251125T080000Z%0D%0ADTEND%3A20251125T100000Z%0D%0ADESCRIPTION%3A100%20lid%C3%AD%20do%20%22U%22%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"25.11.2025","showTime":true,"timeText":"09:00 – 11:00"},{"title":"Po stopách krále Šumavy","calendar":"Kulturní dům","location":"Knihovna","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Po%20stop%C3%A1ch%20kr%C3%A1le%20%C5%A0umavy&dates=20251125T160000Z/20251125T180000Z&details=&location=Knihovna&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AD1lXEA9Alxt0aKs3vHWGvu5h%40mks-events%0D%0ADTSTAMP%3A20251015T193910Z%0D%0ASUMMARY%3APo%20stop%C3%A1ch%20kr%C3%A1le%20%C5%A0umavy%0D%0ADTSTART%3A20251125T160000Z%0D%0ADTEND%3A20251125T180000Z%0D%0ALOCATION%3AKnihovna%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"25.11.2025","showTime":true,"timeText":"17:00 – 19:00"},{"title":"Bicí oddělení","calendar":"Kulturní dům","location":"","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Bic%C3%AD%20odd%C4%9Blen%C3%AD&dates=20251125T160000Z/20251125T180000Z&details=&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Aup0UH1UDpyBdOyRi9TyXF4RC%40mks-events%0D%0ADTSTAMP%3A20251015T193916Z%0D%0ASUMMARY%3ABic%C3%AD%20odd%C4%9Blen%C3%AD%0D%0ADTSTART%3A20251125T160000Z%0D%0ADTEND%3A20251125T180000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"25.11.2025","showTime":true,"timeText":"17:00 – 19:00"},{"title":"Od hospody k hospodě V","calendar":"Taneční sál","location":"Sál KD","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Od%20hospody%20k%20hospod%C4%9B%20V&dates=20251211T170000Z/20251211T190000Z&details=&location=S%C3%A1l%20KD&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A%2FWXLxwf%2BNqKQOQesUgTIh%2Bp6%40mks-events%0D%0ADTSTAMP%3A20251015T193907Z%0D%0ASUMMARY%3AOd%20hospody%20k%20hospod%C4%9B%20V%0D%0ADTSTART%3A20251211T170000Z%0D%0ADTEND%3A20251211T190000Z%0D%0ALOCATION%3AS%C3%A1l%20KD%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"11.12.2025","showTime":true,"timeText":"18:00 – 20:00"},{"title":"Setkání se starostou","calendar":"Kulturní dům","location":"Divadelní kavárna","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Setk%C3%A1n%C3%AD%20se%20starostou&dates=20260119T170000Z/20260119T183000Z&details=&location=Divadeln%C3%AD%20kav%C3%A1rna&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3A4%2FUr49zi0KKvTYZwixSURIw5%40mks-events%0D%0ADTSTAMP%3A20251015T193909Z%0D%0ASUMMARY%3ASetk%C3%A1n%C3%AD%20se%20starostou%0D%0ADTSTART%3A20260119T170000Z%0D%0ADTEND%3A20260119T183000Z%0D%0ALOCATION%3ADivadeln%C3%AD%20kav%C3%A1rna%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"19.1.2026","showTime":true,"timeText":"18:00 – 19:30"},{"title":"ZŠ - předávání vysvědčení","calendar":"Taneční sál","location":"","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Z%C5%A0%20-%20p%C5%99ed%C3%A1v%C3%A1n%C3%AD%20vysv%C4%9Bd%C4%8Den%C3%AD&dates=20260629T150000Z/20260629T170000Z&details=&location=&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Ayy0A2g1RyZzRGtYJEJ1QamF%2F%40mks-events%0D%0ADTSTAMP%3A20251015T193903Z%0D%0ASUMMARY%3AZ%C5%A0%20-%20p%C5%99ed%C3%A1v%C3%A1n%C3%AD%20vysv%C4%9Bd%C4%8Den%C3%AD%0D%0ADTSTART%3A20260629T150000Z%0D%0ADTEND%3A20260629T170000Z%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"29.6.2026","showTime":true,"timeText":"17:00 – 19:00"},{"title":"Pódium Nežetice","calendar":"Trhové Sviny a okolí","location":"Nežetice","details":"","image":"","gcalUrl":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=P%C3%B3dium%20Ne%C5%BEetice&dates=20260718/20260719&details=&location=Ne%C5%BEetice&sf=true&output=xml","icsDataUri":"data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FMKS%20Events%2F%2FCZ%0D%0ACALSCALE%3AGREGORIAN%0D%0AMETHOD%3APUBLISH%0D%0ABEGIN%3AVEVENT%0D%0AUID%3AgzYP6ZjBCRs8jBi0Emuxb3%2F0%40mks-events%0D%0ADTSTAMP%3A20251015T193904Z%0D%0ASUMMARY%3AP%C3%B3dium%20Ne%C5%BEetice%0D%0ADTSTART%3BVALUE%3DDATE%3A20260718%0D%0ADTEND%3BVALUE%3DDATE%3A20260719%0D%0ALOCATION%3ANe%C5%BEetice%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A","dateBadge":"18.7.2026","showTime":false,"timeText":""}];
+
+/* helpers */
+function h(s){return String(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function ha(s){return h(s).replace(/"/g,'&quot;')}
+function slugify(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'akce'}
+
+/* karta */
+function renderCardHTML(d){
+  var media = d.image
+    ? '<div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" decoding="async" src="'+ha(d.image)+'" alt=""></div></div>'
+    : '';
+  var meta = '<div class="meta">'+
+               (d.location ? '<span class="badge badge--location">📍 '+h(d.location)+'</span>' : '')+
+               '<span class="badge">📅 '+h(d.dateBadge)+'</span>'+
+               (d.showTime ? ' <span class="badge">⏰ '+h(d.timeText)+'</span>' : '')+
+             '</div>';
+  var title = '<h2 class="title">'+h(d.title)+'</h2>';
+  var desc  = d.details? '<div class="desc">'+h(d.details)+'</div>' : '';
+
+  const gtxt = 'Přidat do Google kalendáře';
+  const atxt = 'Přidat do Apple kalendáře';
+
+  return '<article class="card" data-calendar="'+ha(d.calendar)+'">'+
+           media+
+           '<div class="body">'+
+             meta + title + desc +
+             '<div class="actions">'+
+               '<a class="btn" href="'+ha(d.gcalUrl)+'" target="_blank" rel="noopener" title="'+ha(gtxt)+'"><span class="ico">🗓️</span> <span class="label">'+h(gtxt)+'</span></a>'+
+               '<a class="btn" href="'+ha(d.icsDataUri)+'" download="'+ha(slugify(d.title))+'.ics" title="'+ha(atxt)+'"><span class="ico">🍎</span> <span class="label">'+h(atxt)+'</span></a>'+
+             '</div>'+
+           '</div>'+
+         '</article>';
+}
+
+/* iFrame resize */
+function sendHeight(){var h=document.body.scrollHeight; parent&&parent.postMessage&&parent.postMessage({type:'resize-iframe',height:h},'*');}
+window.addEventListener('load',sendHeight);
+window.addEventListener('resize',sendHeight);
+setTimeout(sendHeight,300);
+
+/* Lightbox */
+(function(){var box=document.getElementById('lightbox'),img=document.getElementById('lightbox-img');
+  document.addEventListener('click',function(e){var t=e.target;
+    if(t&&t.tagName==='IMG'&&t.classList.contains('poster')){img.src=t.currentSrc||t.src;box.classList.add('open');box.setAttribute('aria-hidden','false');e.preventDefault();}
+    else if(t===box){box.classList.remove('open');box.setAttribute('aria-hidden','true');img.src='';}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){box.classList.remove('open');box.setAttribute('aria-hidden','true');img.src='';}});
+})();
+
+/* fallback: když se obrázek nenačte */
+document.addEventListener('error',function(e){
+  var t=e.target; if(t&&t.tagName==='IMG'&&t.classList.contains('poster')){
+    var wrap=t.closest('.media'); if(wrap) wrap.style.display='none'; sendHeight();
+  }
+},true);
+
+/* Lazy render */
+(function(){
+  var data = Array.isArray(window.__REST_EVENTS)? window.__REST_EVENTS.slice():[];
+  if(!data.length) return;
+  var grid = document.getElementById('grid');
+  var sent = document.getElementById('load-more-sentinel');
+  var CHUNK = 6;
+
+  function appendChunk(){
+    var part=data.splice(0,CHUNK); if(!part.length) return;
+    var html=part.map(renderCardHTML).join(''); var tmp=document.createElement('div'); tmp.innerHTML=html;
+    while(tmp.firstChild) grid.appendChild(tmp.firstChild);
+    sendHeight();
+  }
+  appendChunk();
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(ent){ if(ent.isIntersecting){ appendChunk(); if(!data.length){ io.disconnect(); sent.remove(); } } });
+  },{root:null,rootMargin:'600px 0px',threshold:0});
+  io.observe(sent);
+})();
+</script>
+</body></html>
