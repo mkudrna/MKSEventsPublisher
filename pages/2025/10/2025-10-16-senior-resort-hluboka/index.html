@@ -1,26 +1,59 @@
 <!DOCTYPE html><html lang="cs"><head>
 
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Senior Resort Hluboká | 2025/10</title>
+<title>Senior Resort Hluboká | Archiv</title>
 <meta name="description" content="Ve čtvrtek 16. 10. od 17:00 se uskuteční přátelské setkání spojené s prezentací projektu Senior Resort Hluboká. Přijďte se dozvědět více a z">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box} body{margin:0;padding:24px;font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;color:#1f2937;background:#fff}
-.wrapper{max-width:980px;margin:0 auto}
-.header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px}
-h1{margin:0;font-size:28px} .muted{color:#6b7280}
-.grid{display:grid;gap:14px}
-.card{border:1px solid #e5e7eb;border-radius:12px;padding:14px;display:flex;gap:14px;background:#fff}
-.media{flex:0 0 160px;max-width:160px}
-.media img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid #e5e7eb}
-.body{flex:1;min-width:0}
-.title{margin:0 0 6px 0;font-size:20px;line-height:1.3}
-.meta{font-size:14px;color:#374151}
-a{color:#0b69d7;text-decoration:none} a:hover{text-decoration:underline}
-.breadcrumbs{font-size:14px;color:#6b7280;margin:6px 0 16px}
-hr{border:none;height:1px;background:#e5e7eb;margin:16px 0}
-.footer{margin-top:24px;font-size:14px;color:#6b7280}
+*{box-sizing:border-box}
+body{margin:0;background:#f7f7f9;color:#202225;font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+.wrapper{max-width:980px;margin:0 auto;padding:24px}
+.topbar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 16px 0}
+.topbar h1{margin:0;font-size:22px;color:#374151}
+.breadcrumbs{font-size:14px;color:#6b7280}
+.breadcrumbs a{color:#0b69d7;text-decoration:none}
+.breadcrumbs a:hover{text-decoration:underline}
+
+/* karta – převzato/stylově sladěno s live */
+.card{
+  position:relative; display:flex; gap:18px; align-items:stretch;
+  background:#fff; border-radius:16px; padding:18px; padding-left:calc(18px + 56px);
+  box-shadow:0 6px 24px rgba(0,0,0,.08); border:1px solid #eef0f4;
+}
+.card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:56px; background:var(--bar,#4b5563); border-radius:16px 0 0 16px}
+.card::after{content:attr(data-calendar); position:absolute; left:0; top:0; bottom:0; width:56px; display:flex; align-items:center; justify-content:center; writing-mode:vertical-rl; text-orientation:mixed; color:#fff; font-weight:700; letter-spacing:.3px; padding:8px 0; text-align:center; overflow:hidden; opacity:.95; }
+
+.media{flex:0 0 340px; max-width:340px; align-self:flex-start}
+.poster-wrap{ background:#fff; border-radius:12px; overflow:hidden; border:1px solid rgba(0,0,0,.06); box-shadow:0 4px 12px rgba(0,0,0,.06) }
+.poster{ display:block; width:100%; height:auto; max-height:640px }
+
+.body{flex:1; min-width:0; display:flex; flex-direction:column}
+.title{ margin:0; padding:0 0 6px; font-size:26px; line-height:1.25; font-weight:700 }
+.meta{ display:flex; align-items:center; gap:10px; padding:6px 0 12px; border-bottom:1px solid #e8ecf3; flex-wrap:wrap }
+.badge{ display:inline-block; background:#f5f6fa; color:#3d4051; border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600 }
+
+.desc{ color:#2a2d3a; font-size:17px; padding:12px 0 }
+
+/* barvy podle kalendáře – stejné mapování jako live (blind-friendly) */
+.card[data-calendar*="Buškův hamr"]{ --bar:#2a9d8f }
+.card[data-calendar*="Centrum komunitních aktivit"]{ --bar:#1f77b4 }
+.card[data-calendar*="Kostel Nanebevzetí Panny Marie"]{ --bar:#9467bd }
+.card[data-calendar*="Kostel Nejsvětější Trojice"]{ --bar:#8c564b }
+.card[data-calendar*="Kulturní a informační centrum"]{ --bar:#17becf }
+.card[data-calendar*="Kulturní dům"]{ --bar:#e76f51 }
+.card[data-calendar*="Letní scéna"]{ --bar:#bcbd22 }
+.card[data-calendar*="Taneční sál"]{ --bar:#e9c46a }
+.card[data-calendar*="Velký rybník"]{ --bar:#2ca02c }
+.card[data-calendar*="Žižkovo náměstí"]{ --bar:#264653 }
+.card[data-calendar*="Trhové Sviny a okolí"]{ --bar:#7f7f7f }
+
+/* seznam karet na indexech */
+.grid{ display:grid; gap:16px }
+.a-card{ text-decoration:none }
+.footer{ margin-top:20px; font-size:14px; color:#6b7280 }
+.footer a{ color:#0b69d7; text-decoration:none }
+.footer a:hover{ text-decoration:underline }
 </style>
   
 <script type="application/ld+json">
@@ -37,16 +70,23 @@ hr{border:none;height:1px;background:#e5e7eb;margin:16px 0}
 </script>
 </head>
 <body><div class="wrapper">
-  <nav class="breadcrumbs"><a href="../">← Zpět na 10.2025</a></nav>
-  <div class="header"><h1>Senior Resort Hluboká</h1><div class="muted">Centrum komunitních aktivit</div></div>
-  <div class="card">
-    <div class="media"><img loading="lazy" src="/img/2025-10-16-senior-resort-hluboka.webp" alt=""></div>
-    <div class="body">
-      <div class="meta">16.10.2025 • 17:00 – 18:00</div>
-      <p>Ve čtvrtek 16. 10. od 17:00 se uskuteční přátelské setkání spojené s prezentací projektu Senior Resort Hluboká. Přijďte se dozvědět více a zeptat se na vše, co Vás zajímá.</p>
-      <hr>
-      <div class="muted">Archiv záznamu akce (proběhlo).</div>
-    </div>
+  <div class="topbar">
+    <h1>Archiv akcí MěKS Trhové Sviny</h1>
+    <div class="breadcrumbs"><a href="../">← Zpět na říjen 2025</a> • <a href="../../">Rok 2025</a> • <a href="/pages/">Všechny roky</a></div>
   </div>
-  <div class="footer"><a href="../../">Měsíc</a> • <a href="../../../">Rok</a> • <a href="/pages/">Roky</a></div>
+
+  <article class="card" data-calendar="Centrum komunitních aktivit">
+    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" src="/img/2025-10-16-senior-resort-hluboka.webp" alt=""></div></div>
+    <div class="body">
+      <h2 class="title">Senior Resort Hluboká</h2>
+      <div class="meta">
+        
+        <span class="badge">📅 16.10.2025</span>
+        <span class="badge">⏰ 17:00 – 18:00</span>
+      </div>
+      <div class="desc">Ve čtvrtek 16. 10. od 17:00 se uskuteční přátelské setkání spojené s prezentací projektu Senior Resort Hluboká. Přijďte se dozvědět více a zeptat se na vše, co Vás zajímá.</div>
+    </div>
+  </article>
+
+  <div class="footer"><a href="../">← Zpět na říjen 2025</a> • <a href="../../">Rok 2025</a> • <a href="/pages/">Všechny roky</a></div>
 </div></body></html>
