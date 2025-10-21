@@ -1,66 +1,4 @@
-<!DOCTYPE html><html lang="cs"><head>
-
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Podzimní DRAKIÁDA | Archiv</title>
-<meta name="description" content="Srdečně Vás zveme na naši tradiční podzimní Drakiádu, která se bude konat v neděli 19. října 2025 od 15:00 na Buškově hamru. Na místo Vás do">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#f7f7f9;color:#202225;font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-.wrapper{max-width:980px;margin:0 auto;padding:24px}
-.topbar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 16px 0}
-.topbar h1{margin:0;font-size:22px;color:#374151}
-.breadcrumbs{font-size:14px;color:#6b7280}
-.breadcrumbs a{color:#0b69d7;text-decoration:none}
-.breadcrumbs a:hover{text-decoration:underline}
-
-/* karta – převzato/stylově sladěno s live */
-.card{
-  position:relative; display:flex; gap:18px; align-items:stretch;
-  background:#fff; border-radius:16px; padding:18px; padding-left:calc(18px + 56px);
-  box-shadow:0 6px 24px rgba(0,0,0,.08); border:1px solid #eef0f4;
-}
-.card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:56px; background:var(--bar,#4b5563); border-radius:16px 0 0 16px}
-.card::after{content:attr(data-calendar); position:absolute; left:0; top:0; bottom:0; width:56px; display:flex; align-items:center; justify-content:center; writing-mode:vertical-rl; text-orientation:mixed; color:#fff; font-weight:700; letter-spacing:.3px; padding:8px 0; text-align:center; overflow:hidden; opacity:.95; }
-
-.media{flex:0 0 340px; max-width:340px; align-self:flex-start}
-.poster-wrap{ background:#fff; border-radius:12px; overflow:hidden; border:1px solid rgba(0,0,0,.06); box-shadow:0 4px 12px rgba(0,0,0,.06) }
-.poster{ display:block; width:100%; height:auto; max-height:640px }
-
-.body{flex:1; min-width:0; display:flex; flex-direction:column}
-.title{ margin:0; padding:0 0 6px; font-size:26px; line-height:1.25; font-weight:700; color:#202225 }  /* pevná barva titulku jako ve streamu */
-.meta{ display:flex; align-items:center; gap:10px; padding:6px 0 12px; border-bottom:1px solid #e8ecf3; flex-wrap:wrap }
-.badge{ display:inline-block; background:#f5f6fa; color:#3d4051; border-radius:6px; padding:4px 10px; font-size:14px; font-weight:600 }
-
-.desc{ color:#2a2d3a; font-size:17px; padding:12px 0 }
-
-/* odkazy obalující kartu – žádná modrá/visited */
-.a-card{ display:block; color:inherit; text-decoration:none }
-.a-card:visited{ color:inherit }
-.a-card:hover .card{ box-shadow:0 10px 30px rgba(0,0,0,.12); transform:translateY(-1px) }
-
-/* barvy podle kalendáře – stejné mapování jako live (blind-friendly) */
-.card[data-calendar*="Buškův hamr"]{ --bar:#2a9d8f }
-.card[data-calendar*="Centrum komunitních aktivit"]{ --bar:#1f77b4 }
-.card[data-calendar*="Kostel Nanebevzetí Panny Marie"]{ --bar:#9467bd }
-.card[data-calendar*="Kostel Nejsvětější Trojice"]{ --bar:#8c564b }
-.card[data-calendar*="Kulturní a informační centrum"]{ --bar:#17becf }
-.card[data-calendar*="Kulturní dům"]{ --bar:#e76f51 }
-.card[data-calendar*="Letní scéna"]{ --bar:#bcbd22 }
-.card[data-calendar*="Taneční sál"]{ --bar:#e9c46a }
-.card[data-calendar*="Velký rybník"]{ --bar:#2ca02c }
-.card[data-calendar*="Žižkovo náměstí"]{ --bar:#264653 }
-.card[data-calendar*="Trhové Sviny a okolí"]{ --bar:#7f7f7f }
-
-/* seznam karet na indexech */
-.grid{ display:grid; gap:16px }
-.footer{ margin-top:20px; font-size:14px; color:#6b7280 }
-.footer a{ color:#0b69d7; text-decoration:none }
-.footer a:hover{ text-decoration:underline }
-</style>
-  
-<script type="application/ld+json">
+<!DOCTYPE html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Podzimní DRAKIÁDA | Archiv</title><meta name="description" content="Srdečně Vás zveme na naši tradiční podzimní Drakiádu, která se bude konat v neděli 19. října 2025 od 15:00 na Buškově hamru. Na místo Vás do"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box}body{margin:0;background:#f7f7f9;color:#202225;font:16px/1.7 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}.wrapper{max-width:980px;margin:0 auto;padding:24px}.topbar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 16px 0}.topbar h1{margin:0;font-size:22px;color:#374151}.breadcrumbs{font-size:14px;color:#6b7280}.breadcrumbs a{color:#0b69d7;text-decoration:none}.breadcrumbs a:hover{text-decoration:underline}.card{position:relative;display:flex;gap:18px;align-items:stretch;background:#fff;border-radius:16px;padding:18px;padding-left:calc(18px + 56px);box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid #eef0f4}.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:56px;background:var(--bar,#4b5563);border-radius:16px 0 0 16px}.card::after{content:attr(data-calendar);position:absolute;left:0;top:0;bottom:0;width:56px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;text-orientation:mixed;color:#fff;font-weight:700;letter-spacing:.3px;padding:8px 0;text-align:center;overflow:hidden;opacity:.95}.media{flex:0 0 340px;max-width:340px;align-self:flex-start}.poster-wrap{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 4px 12px rgba(0,0,0,.06);cursor:zoom-in}.poster{display:block;width:100%;height:auto;max-height:640px}.body{flex:1;min-width:0;display:flex;flex-direction:column}.title{margin:0;padding:0 0 6px;font-size:26px;line-height:1.25;font-weight:700;color:#202225}.meta{display:flex;align-items:center;gap:10px;padding:6px 0 12px;border-bottom:1px solid #e8ecf3;flex-wrap:wrap}.badge{display:inline-block;background:#f5f6fa;color:#3d4051;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:600}.desc{color:#2a2d3a;font-size:17px;padding:12px 0}.a-card{display:block;color:inherit;text-decoration:none}.a-card:visited{color:inherit}.a-card:hover .card{box-shadow:0 10px 30px rgba(0,0,0,.12);transform:translateY(-1px)}.card[data-calendar*="Buškův hamr"]{--bar:#2a9d8f}.card[data-calendar*="Centrum komunitních aktivit"]{--bar:#1f77b4}.card[data-calendar*="Kostel Nanebevzetí Panny Marie"]{--bar:#9467bd}.card[data-calendar*="Kostel Nejsvětější Trojice"]{--bar:#8c564b}.card[data-calendar*="Kulturní a informační centrum"]{--bar:#17becf}.card[data-calendar*="Kulturní dům"]{--bar:#e76f51}.card[data-calendar*="Letní scéna"]{--bar:#bcbd22}.card[data-calendar*="Taneční sál"]{--bar:#e9c46a}.card[data-calendar*="Velký rybník"]{--bar:#2ca02c}.card[data-calendar*="Žižkovo náměstí"]{--bar:#264653}.card[data-calendar*="Trhové Sviny a okolí"]{--bar:#7f7f7f}.grid{display:grid;gap:16px}.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:9999}.lightbox.open{display:flex}.lightbox img{max-width:95vw;max-height:95vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}.footer{margin-top:20px;font-size:14px;color:#6b7280}.footer a{color:#0b69d7;text-decoration:none}.footer a:hover{text-decoration:underline}</style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Event",
@@ -71,26 +9,4 @@ body{margin:0;background:#f7f7f9;color:#202225;font:16px/1.7 "Inter",system-ui,-
   "description": "Srdečně Vás zveme na naši tradiční podzimní Drakiádu, která se bude konat v neděli 19. října 2025 od 15:00 na Buškově hamru. Na místo Vás dovede tématická stezka a na Hamru Vás i Vaše děti čeká zábavný program. Doufáme, že nám bude přát počasí a vítr, abychom si mohli užít i pouštění draků. Tak neváhejte a přijďte v neděli za námi – těšíme se na Vás!",
   "url": "/pages/2025/10/2025-10-19-podzimni-drakiada/"
 }
-</script>
-</head>
-<body><div class="wrapper">
-  <div class="topbar">
-    <h1>Archiv akcí MěKS Trhové Sviny</h1>
-    <div class="breadcrumbs"><a href="../">← Zpět na říjen 2025</a> • <a href="../../">Rok 2025</a> • <a href="/pages/">Všechny roky</a></div>
-  </div>
-
-  <article class="card" data-calendar="Buškův hamr">
-    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" src="/img/2025-10-19-podzimni-drakiada.webp" alt=""></div></div>
-    <div class="body">
-      <h2 class="title">Podzimní DRAKIÁDA</h2>
-      <div class="meta">
-        
-        <span class="badge">📅 19.10.2025</span>
-        <span class="badge">⏰ 15:00 – 18:00</span>
-      </div>
-      <div class="desc">Srdečně Vás zveme na naši tradiční podzimní Drakiádu, která se bude konat v neděli 19. října 2025 od 15:00 na Buškově hamru. Na místo Vás dovede tématická stezka a na Hamru Vás i Vaše děti čeká zábavný program. Doufáme, že nám bude přát počasí a vítr, abychom si mohli užít i pouštění draků. Tak neváhejte a přijďte v neděli za námi – těšíme se na Vás!</div>
-    </div>
-  </article>
-
-  <div class="footer"><a href="../">← Zpět na říjen 2025</a> • <a href="../../">Rok 2025</a> • <a href="/pages/">Všechny roky</a></div>
-</div></body></html>
+</script></head><body><div class="wrapper">  <div class="topbar">    <h1>Archiv akcí MěKS Trhové Sviny</h1>    <div class="breadcrumbs"><a href="../">2025/10</a> • <a href="../../">2025</a> • <a href="/pages/">Rozcestník archivu</a></div>  </div>  <article class="card" data-calendar="Buškův hamr">    <div class="media"><div class="poster-wrap"><img class="poster" loading="lazy" src="/img/2025-10-19-podzimni-drakiada.webp" alt=""></div></div>    <div class="body">      <h2 class="title">Podzimní DRAKIÁDA</h2>      <div class="meta">                <span class="badge">📅 19.10.2025</span>        <span class="badge">⏰ 15:00 – 18:00</span>      </div>      <div class="desc">Srdečně Vás zveme na naši tradiční podzimní Drakiádu, která se bude konat v neděli 19. října 2025 od 15:00 na Buškově hamru. Na místo Vás dovede tématická stezka a na Hamru Vás i Vaše děti čeká zábavný program. Doufáme, že nám bude přát počasí a vítr, abychom si mohli užít i pouštění draků. Tak neváhejte a přijďte v neděli za námi – těšíme se na Vás!</div>    </div>  </article>  <div class="footer"><a href="../">2025/10</a> • <a href="../../">2025</a> • <a href="/pages/">Rozcestník archivu</a></div>  <div class="lightbox" id="lightbox" aria-hidden="true"><img id="lightbox-img" alt=""></div><script>(function(){var box=document.getElementById("lightbox"),img=document.getElementById("lightbox-img");document.addEventListener("click",function(e){var t=e.target;if(t&&t.tagName==="IMG"&&t.classList.contains("poster")){img.src=t.currentSrc||t.src;box.classList.add("open");box.setAttribute("aria-hidden","false");e.preventDefault();}else if(t===box){box.classList.remove("open");box.setAttribute("aria-hidden","true");img.src="";}});document.addEventListener("keydown",function(e){if(e.key==="Escape"){box.classList.remove("open");box.setAttribute("aria-hidden","true");img.src="";}});})();</script></div></body></html>
