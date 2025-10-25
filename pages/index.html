@@ -1,22 +1,51 @@
 <!DOCTYPE html><html lang="cs"><head><title>Archiv akcí</title>
 <meta charset="utf-8">
 <style>
-body{font-family:Inter,system-ui,sans-serif;margin:0;padding:20px;background:#fff;color:#222;}
+body{
+  font-family:Inter,system-ui,sans-serif;
+  margin:0; padding:20px;
+  background:#fff; color:#222;
+}
 .wrapper{max-width:940px;margin:0 auto;}
-.card{display:flex;gap:18px;margin-bottom:20px;padding:18px;background:#fff;border-radius:16px;
-      box-shadow:0 4px 14px rgba(0,0,0,.08);position:relative;overflow:hidden;}
+.card{
+  display:flex; gap:18px; margin-bottom:20px; padding:18px;
+  background:#fff; border-radius:16px;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  position:relative; overflow:hidden;
+}
 .media{flex:0 0 300px;max-width:300px}
 .poster{display:block;width:100%;height:auto;border-radius:12px;}
 .body{flex:1 1 auto;display:flex;flex-direction:column;}
 .title{margin:0;padding:12px 0 6px;font-size:24px;line-height:1.25;font-weight:700;}
 .desc{color:#2a2d3a;font-size:17px;padding:6px 0 12px;}
-.badge{display:inline-block;background:#f5f6fa;color:#3d4051;border-radius:6px;padding:4px 10px;
-       font-size:17px;font-weight:600;}
-.meta{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #eee;
-      justify-content:space-between;flex-wrap:nowrap;}
-.meta-left{flex:1 1 auto;min-width:0;}
-.meta-right{flex:0 0 auto;display:flex;gap:10px;white-space:nowrap;}
-.meta-place{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;}
+
+/* --- zvětšené a zvýrazněné badge --- */
+.badge{
+  display:inline-block;
+  background:#f5f6fa;
+  color:#3d4051;
+  border-radius:6px;
+  padding:6px 12px;
+  font-size:17px;
+  line-height:1.4;
+  font-weight:600;
+}
+
+/* --- meta layout sjednocený s LIVE --- */
+.meta{
+  display:flex; align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid #eee;
+  justify-content:space-between; flex-wrap:nowrap;
+}
+.meta-left{ flex:1 1 auto; min-width:0; }
+.meta-right{ flex:0 0 auto; display:flex; gap:10px; white-space:nowrap; }
+.meta-place{
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  display:inline-block;
+}
 </style></head><body><div class="wrapper"><article class="card" data-calendar="Kulturní dům" data-cal="kulturni-dum">
       <div class="media"><div class="poster-wrap"><img class="poster" src="/img/2025-10-21-literarne-hudebni-vecer.png" alt=""></div></div>
       <div class="body">
